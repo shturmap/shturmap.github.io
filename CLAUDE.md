@@ -55,6 +55,8 @@ and never capture anything for routine checks: use the app's `--snapshot` and th
   right", "five quests to complete and one to progress", "300 m ahead and 9 m up") and the clip's `aria-label`.
 - **Crop rectangles** in `make-media.ps1`, if the app's rail moved.
 - **`width` and `height`** in `index.html`, if an image or the clip changed size.
+- **The app's README** embeds `https://shturmap.github.io/assets/img/raid.webp` and repeats the hero's wording: keep
+  that path, and keep the README's description of the screenshot true.
 - **The clip**: the key press before the marker moves, one move only, no jump at the loop.
 
 ## Verify
