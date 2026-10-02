@@ -13,7 +13,7 @@
   --ground: #0B0C0B; --rail: #101110; --panel: #151614; --raised: #1E1F1B;
   --line: #2A2B27; --line-strong: #45463F; --grid: #151614;
   --ink: #D9D5C4; --ink-2: #BDB9A8; --muted: #8A8778; --dim: #6E6C60;
-  --amber: #C9AD62; --amber-hi: #E2CF9C; --amber-fill: #D6BE7E; --teal: #8FB8B1; --teal-line: #6F9A94;
+  --amber: #C9AD62; --sand: #E9E2C8; --amber-hi: #E2CF9C; --amber-fill: #D6BE7E; --teal: #8FB8B1; --teal-line: #6F9A94;
   --f-cond: 'Barlow Semi Condensed', 'Bahnschrift', 'Arial Narrow', sans-serif;
   --f-body: 'Barlow', 'Bahnschrift', system-ui, sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
@@ -38,31 +38,37 @@ h1, h2 { text-wrap: balance; }
 .btn-sm { min-height: 40px; font-size: 13px; }
 .wrap { max-width: 1360px; margin: 0 auto; padding-inline: 24px; }
 
-/* The sheet and its background */
+/* The sheet: a 96 px grid, with the route through the section numbers drawn over it (site.js) */
 .sh { position: relative; z-index: 1; background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 96px 96px; }
-#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: none; pointer-events: none; }
-.gl-on #bg { display: block; }
-.gl-on .sh { background-image: none; }
+#main { position: relative; z-index: 1; }
+.route { position: absolute; left: 0; top: 0; z-index: 0; display: none; overflow: visible; pointer-events: none; }
+.route-on .route { display: block; }
+.route-ahead { fill: none; stroke: var(--amber); stroke-opacity: .45; stroke-width: 1.5; stroke-dasharray: 6 7; }
+.route-done { fill: none; stroke: var(--amber); stroke-opacity: .9; stroke-width: 2; }
+.marker .cone { fill: var(--sand); fill-opacity: .2; }
+.marker .keyline { fill: var(--ground); }
+.marker .dot { fill: var(--sand); }
+.ping circle { fill: none; stroke: var(--amber); stroke-width: 1.5; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; animation: ping 1.8s cubic-bezier(.2, .7, .3, 1) both; }
+.ping circle:nth-child(2) { animation-delay: .35s; }
+.ping circle:nth-child(3) { animation-delay: .7s; }
+@keyframes ping { from { transform: scale(.15); opacity: .9; } to { transform: scale(1); opacity: 0; } }
 
 /* PREVIEW: remove at launch (with the banner in index.html) */
-.preview-banner { background: var(--rail); border-bottom: 1px solid var(--line); border-left: 3px solid var(--amber); }
-.preview-banner .wrap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding-block: 9px; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
-.preview-label { font-family: var(--f-cond); font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); }
+.preview-banner { background: var(--amber); color: var(--ground); }
+.preview-banner .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 22px; }
+.preview-banner p { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(18px, 2vw, 24px); line-height: 1.3; }
+.preview-label { flex: none; padding: 6px 12px; background: var(--ground); color: var(--amber); font-family: var(--f-cond); font-weight: 600; font-size: 16px; letter-spacing: .2em; text-transform: uppercase; }
 /* /PREVIEW */
 
-/* Header: sticky; its brand slides in once the hero's own lockup and text have scrolled away */
+/* Header: sticky. Its brand takes over from the hero logo once that has moved up into it (site.js) */
 .site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ground); border-bottom: 1px solid var(--line); }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--head-h); }
-.brand { display: block; line-height: 0; overflow: hidden; max-width: 209px; opacity: 1; }
-.brand img { width: 209px; height: 40px; max-width: none; }
-.js .brand { max-width: 0; opacity: 0; transition: max-width .2s cubic-bezier(.2, .7, .3, 1), opacity .2s ease; }
-.js .brand.in { max-width: 209px; opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .js .brand { transition: none; } }
+.brand { display: block; line-height: 0; }
+.brand img { width: 204px; height: 40px; max-width: none; }
+.js .brand { visibility: hidden; }
+.js .brand.in { visibility: visible; }
+.flyer { position: fixed; left: 0; top: 0; z-index: 11; display: none; height: auto; max-width: none; transform-origin: 0 0; pointer-events: none; will-change: transform; }
 
-.ruler { display: grid; grid-template-columns: 96px repeat(12, minmax(0, 1fr)); border-bottom: 1px solid var(--line-strong); }
-.ruler span { font-family: var(--f-mono); font-size: 11px; color: var(--muted); border-left: 1px solid var(--line-strong); padding: 4px 0 6px 6px; }
-.ruler span:first-child { border-left: 0; }
-.ref { font-family: var(--f-mono); font-size: 12px; font-weight: 600; color: var(--ground); background: var(--amber); padding: 2px 7px; letter-spacing: .04em; }
 .ref-line { display: flex; gap: 12px; align-items: center; }
 .b-row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 24px; padding-block: 80px; border-top: 1px solid var(--line); }
 .b-row:first-of-type { border-top: 0; }
@@ -74,7 +80,8 @@ h1, h2 { text-wrap: balance; }
 
 /* Hero */
 .hero-body { display: flex; flex-direction: column; gap: 26px; max-width: 900px; }
-.hero-logo { width: 376px; height: auto; }
+.hero-logo { width: 367px; height: auto; }
+.hero-logo.away { visibility: hidden; }
 .hero-text { display: flex; flex-direction: column; gap: 22px; }
 h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; color: var(--ink); }
 .hero-sub { margin: 0; max-width: 680px; font-size: 19px; color: var(--ink-2); }
@@ -89,8 +96,10 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
 .b-gut { position: relative; margin: 0; padding: 0; list-style: none; }
 .b-lab { position: absolute; left: 44px; right: 0; transform: translateY(-50%); display: flex; gap: 10px; font-size: 13px; line-height: 1.35; color: var(--ink); white-space: nowrap; }
 .b-lab b { font-family: var(--f-mono); color: var(--amber); font-weight: 600; }
-#loupe { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; display: none; }
-.loupe-on #loupe { display: block; }
+.loupe { position: absolute; left: 0; top: 0; z-index: 3; display: none; width: 260px; height: 260px; border: 1px solid var(--amber); box-shadow: 0 0 0 2px var(--ground); background-color: var(--ground); background-repeat: no-repeat; pointer-events: none; }
+.loupe::before, .loupe::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--amber); }
+.loupe::before { width: 16px; height: 1px; transform: translate(-50%, -50%); box-shadow: none; }
+.loupe::after { width: 1px; height: 16px; transform: translate(-50%, -50%); }
 .loupe-on .b-img { cursor: crosshair; }
 .credit { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; font-size: 13px; color: var(--muted); }
 .fig { margin: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -138,9 +147,6 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
   :root { --head-h: 64px; }
   .b-row { grid-template-columns: 1fr; gap: 12px; padding-block: 52px; }
   .b-num { width: 56px; }
-  .ruler { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .ruler span:first-child, .ruler span:nth-child(n+8) { display: none; }
-  .ruler span:nth-child(2) { border-left: 0; }
   .b-anno { grid-template-columns: 1fr; }
   .b-ln { display: none; }
   .b-pt { width: 18px; height: 18px; font-size: 11px; }

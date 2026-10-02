@@ -35,29 +35,34 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="bg" aria-hidden="true"></canvas>
 
 <div class="sh" id="top">
   <!-- PREVIEW: remove at launch -->
   <div class="preview-banner" role="note">
-    <div class="wrap"><span class="preview-label">Preview</span><span>Shturmap isn't released yet. This page is up for checking; the GitHub link opens at launch.</span></div>
+    <div class="wrap"><span class="preview-label">Preview</span><p>Shturmap isn't released yet. This page is up for checking; the GitHub link opens at launch.</p></div>
   </div>
   <!-- /PREVIEW -->
   <header class="site-head">
     <div class="wrap">
-      <a class="brand" id="brand" href="#top"><img src="assets/img/logo-dark.svg" width="209" height="40" alt="Shturmap, back to the top"></a>
+      <a class="brand" id="brand" href="#top"><img src="assets/img/logo-dark.svg" width="204" height="40" alt="Shturmap, back to the top"></a>
       <a class="btn btn-sm" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
     </div>
   </header>
 
-  <main class="wrap" id="main">
-    <div class="ruler" aria-hidden="true"><span></span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>J</span><span>K</span><span>L</span><span>M</span></div>
+  <svg class="route" id="route" aria-hidden="true">
+    <path class="route-ahead"></path>
+    <path class="route-done"></path>
+    <g class="ping"></g>
+    <g class="marker"><path class="cone" d="M0 0 L36 -15 A39 39 0 0 1 36 15 Z"></path><circle class="keyline" r="9"></circle><circle class="dot" r="6.5"></circle></g>
+  </svg>
 
-    <section class="b-row" id="a1" data-ref="A1" data-name="Top">
+  <main class="wrap" id="main">
+
+    <section class="b-row" id="a1" data-ref="01" data-name="Top">
       <div class="b-num">01</div>
       <div class="hero-body">
-        <div class="ref-line"><span class="ref">A1</span><span class="eb">Windows · free and open source</span></div>
-        <img class="hero-logo" src="assets/img/logo-dark.svg" width="376" height="72" alt="Shturmap">
+        <div class="ref-line"><span class="eb">Native Windows app · free and open source</span></div>
+        <img class="hero-logo" id="hero-logo" src="assets/img/logo-dark.svg" width="367" height="72" alt="Shturmap">
         <div class="hero-text" id="hero-text">
           <h1>A second-monitor map for Escape from Tarkov.</h1>
           <p class="hero-sub">Your active quests' objectives, the extracts and your position on the map of the raid you're in. What you'd otherwise look up in the wiki, in one window.</p>
@@ -69,11 +74,11 @@
       </div>
     </section>
 
-    <section class="b-row" id="a2" data-ref="A2" data-name="In the raid">
+    <section class="b-row" id="a2" data-ref="02" data-name="In the raid">
       <div class="b-num">02</div>
       <div class="stack" style="gap: 32px">
         <div class="stack" style="max-width: 680px">
-          <div class="ref-line"><span class="ref">A2</span><span class="eb">In the raid</span></div>
+          <div class="ref-line"><span class="eb">In the raid</span></div>
           <h2 class="h">Press your screenshot key. You're on the map.</h2>
           <p class="lead">The game writes your position into the screenshot's file name. Shturmap reads it, drops your marker and sorts objectives by distance and direction. No clicks.</p>
         </div>
@@ -88,7 +93,7 @@
               <div class="b-ln" style="left: 96.1%; top: 74%"></div><div class="b-pt" style="left: 96.1%; top: 74%">5</div>
               <div class="b-ln" style="left: 58%; top: 88.3%"></div><div class="b-pt" style="left: 58%; top: 88.3%">6</div>
               <div class="b-ln" style="left: 27.7%; top: 95.9%"></div><div class="b-pt" style="left: 27.7%; top: 95.9%">7</div>
-              <canvas id="loupe" aria-hidden="true"></canvas>
+              <div class="loupe" id="loupe" aria-hidden="true"></div>
             </div>
             <ol class="b-gut">
               <li class="b-lab" style="top: 2.1%"><b>1</b><span>Raid, side, age of your position.</span></li>
@@ -100,11 +105,11 @@
               <li class="b-lab" style="top: 95.9%"><b>7</b><span>The wiki's map, one click away.</span></li>
             </ol>
           </div>
-          <div class="credit"><span>A raid on Streets of Tarkov, rendered by the app at 1600×900.</span><span>Map © Shebuka and contributors, CC BY-NC-SA 4.0</span></div>
+          <div class="credit"><span>A raid on Streets of Tarkov, rendered by the app at 1600×900 (hover to magnify).</span><span>Map © Shebuka and contributors, CC BY-NC-SA 4.0</span></div>
         </div>
         <div class="pair">
           <figure class="fig">
-            <img src="assets/img/raid-card.webp" width="384" height="504" alt="The raid card at actual size: next objective 69 m ahead-left, nearest extract 94 m to the right, then every objective by distance" style="max-width: 384px; width: 100%">
+            <img src="assets/img/raid-card.webp" width="384" height="505" alt="The raid card at actual size: next objective 69 m ahead-left, nearest extract 94 m to the right, then every objective by distance" style="max-width: 384px; width: 100%">
             <figcaption>The raid card, actual size.</figcaption>
           </figure>
           <div class="stack" style="align-self: center">
@@ -115,17 +120,17 @@
       </div>
     </section>
 
-    <section class="b-row" id="a3" data-ref="A3" data-name="Before the raid">
+    <section class="b-row" id="a3" data-ref="03" data-name="Before the raid">
       <div class="b-num">03</div>
       <div>
         <div class="feat">
           <div class="stack">
-            <div class="ref-line"><span class="ref">A3</span><span class="eb">Before the raid</span></div>
+            <div class="ref-line"><span class="eb">Before the raid</span></div>
             <h2 class="h">Pick the map that gets the most done.</h2>
             <p class="lead">Maps ranked by how many of your quests they finish or move on. What to bring, and where to get it: trader, flea, barter or loose on the map.</p>
           </div>
           <figure class="fig">
-            <img src="assets/img/plan-rail.webp" width="384" height="790" alt="Plan: Streets of Tarkov first, five quests to complete and one to progress, and the items to bring with where to get each" style="max-width: 384px; width: 100%">
+            <img src="assets/img/plan-rail.webp" width="384" height="700" alt="Plan: Streets of Tarkov first, five quests to complete and one to progress, and the items to bring with where to get each" style="max-width: 384px; width: 100%">
             <figcaption>Plan, actual size: Streets of Tarkov first, and what to bring.</figcaption>
           </figure>
         </div>
@@ -149,11 +154,11 @@
       </div>
     </section>
 
-    <section class="b-row" id="a4" data-ref="A4" data-name="Boundaries">
+    <section class="b-row" id="a4" data-ref="04" data-name="Boundaries">
       <div class="b-num">04</div>
       <div class="stack" style="gap: 28px">
         <div class="stack" style="max-width: 720px">
-          <div class="ref-line"><span class="ref">A4</span><span class="eb">Boundaries</span></div>
+          <div class="ref-line"><span class="eb">Boundaries</span></div>
           <h2 class="h">It only knows what you know.</h2>
           <p class="lead">Everything on the map comes from files the game writes for you, or from public data. Here they are.</p>
         </div>
@@ -208,10 +213,12 @@
       </div>
     </section>
 
-    <section class="b-row" id="a5" data-ref="A5" data-name="Get it">
+    <section class="b-row" id="a5" data-ref="05" data-name="Get it">
       <div class="b-num">05</div>
       <div class="stack" style="gap: 18px; align-items: flex-start">
-        <div class="ref-line"><span class="ref">A5</span><span class="eb">Get it</span></div>
+        <div class="ref-line"><span class="eb">Get it</span></div>
+        <h2 class="h">Native Windows app. No Electron.</h2>
+        <p class="lead">Written in C# on .NET and WinUI 3, with the map drawn on your GPU. No browser engine, no web page in a wrapper. It opens in under a second.</p>
         <p class="get-line">Free and open source (MIT). Windows 10 and 11.</p>
         <a class="btn" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
       </div>
@@ -226,6 +233,6 @@
   </footer>
 </div>
 
-<button type="button" id="readout" aria-label="Jump to the next section"><span id="readout-text">NEXT · A2 IN THE RAID</span></button>
+<button type="button" id="readout" aria-label="Jump to the next section"><span id="readout-text">NEXT · 02 IN THE RAID</span></button>
 </body>
 </html>
