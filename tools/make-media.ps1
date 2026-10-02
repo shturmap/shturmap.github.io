@@ -69,15 +69,22 @@ if ($Video) {
   $demo = Join-Path $work 'demo'
   Write-Output 'Recording the hero clip (about a minute)...'
   & $fakeRaid -Exe $exe -Out $demo -Demo -Ffmpeg $ffmpegExe | Out-Null
+  $invariant = [Globalization.CultureInfo]::InvariantCulture
   $cut = (Get-Content (Join-Path $demo 'cut.txt')) -split ' '
-  $loop = Join-Path $demo 'loop.mkv'
+  $length = [double]::Parse($cut[1], $invariant) - [double]::Parse($cut[0], $invariant)
+  $cutOut = Join-Path $demo 'cut.mkv'; $first = Join-Path $demo 'first.png'; $loop = Join-Path $demo 'loop.mkv'
   # Options with a colon (-c:v) are quoted: PowerShell would read them as its own parameters.
   function Ffmpeg { & $ffmpegExe -hide_banner -loglevel error -y @args; if ($LASTEXITCODE -ne 0) { throw "ffmpeg failed: $args" } }
-  # The loop, cut out of the recording losslessly first, then encoded twice for the web, without sound.
-  Ffmpeg -i (Join-Path $demo 'capture.mkv') -vf "trim=start=$($cut[0]):end=$($cut[1]),setpts=PTS-STARTPTS" '-c:v' libx264rgb -preset ultrafast -qp 0 $loop
-  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libvpx-vp9 -crf 36 '-b:v' 0 -row-mt 1 -deadline good -cpu-used 2 -g 60 -an (Join-Path $videoDir 'hero.webm')
-  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libx264 '-profile:v' high -preset slow -crf 25 -tune stillimage -g 60 -movflags +faststart -an (Join-Path $videoDir 'hero.mp4')
-  Ffmpeg -i $loop '-frames:v' 1 '-c:v' libwebp -quality 85 (Join-Path $img 'hero-poster.webp')
+  # The loop, cut out of the recording losslessly first. The position changes once in it (the key press), so its end
+  # and start differ in the marker and the raid card: the last 0.6 s fade into the first frame, and it loops without
+  # a jump. Then it is encoded twice for the web, without sound.
+  Ffmpeg -i (Join-Path $demo 'capture.mkv') -vf "trim=start=$($cut[0]):end=$($cut[1]),setpts=PTS-STARTPTS" '-c:v' libx264rgb -preset ultrafast -qp 0 $cutOut
+  Ffmpeg -i $cutOut '-frames:v' 1 $first
+  $fadeAt = ($length - 0.6).ToString('0.000', $invariant)
+  Ffmpeg -i $cutOut -loop 1 -framerate 30 -t 0.6 -i $first -filter_complex "[0:v]format=gbrp,fps=30,settb=1/30[a];[1:v]format=gbrp,fps=30,settb=1/30[b];[a][b]xfade=transition=fade:duration=0.6:offset=$fadeAt" '-c:v' libx264rgb -preset ultrafast -qp 0 $loop
+  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libvpx-vp9 -crf 37 '-b:v' 0 -row-mt 1 -deadline good -cpu-used 2 -g 60 -an (Join-Path $videoDir 'hero.webm')
+  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libx264 '-profile:v' high -preset slow -crf 26 -tune stillimage -g 60 -movflags +faststart -an (Join-Path $videoDir 'hero.mp4')
+  Ffmpeg -i $first '-c:v' libwebp -quality 85 (Join-Path $img 'hero-poster.webp')
 }
 
 if ($Brand) {
