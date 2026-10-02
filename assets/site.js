@@ -1,7 +1,8 @@
 // Shturmap website behaviour. Everything here is optional: without JS, WebGL or a wide screen the page is complete.
 //  - Logo: the hero's logo moves up into the header as it scrolls away, and back down on the way up.
 //  - Route (wide screens): a dashed route through the section numbers. A marker like the app's player marker eases
-//    along it after the scroll, pings when it reaches a section, and the NEXT readout jumps to the next one.
+//    along it after the scroll, faces the way it travels (it turns around when you scroll up), pings when it reaches
+//    a section, and the NEXT readout jumps to the next one.
 //  - Contours (wide screens, WebGL): terrain lines behind the page that slowly drift and reshape, and scroll at half
 //    speed. 30 frames a second at most, paused in hidden tabs.
 //  - Loupe (wide screens with a mouse): a 2x magnifier on the in-raid screenshot, which is rendered at 2x.
@@ -56,6 +57,9 @@
   var sections = Array.prototype.slice.call(document.querySelectorAll('section[data-ref]'));
   var anchors = [], pts = [], cum = [], anchorAt = [], total = 0;
   var travelled = null, lastReached = null, lastText = '';
+  // The marker faces the way it last travelled (1 down the route, -1 back up) and turns smoothly toward it.
+  var facing = 1, heading = null;
+  function wrap180(deg) { return deg - 360 * Math.round(deg / 360); }
 
   // Anchors sit on each section number; between two, the route steps out at 45 degrees and back, like a patrol path.
   function measure() {
@@ -119,7 +123,7 @@
     pingEl = g;
   }
 
-  // Moves the marker toward the reading line's spot on the route; returns true while it is still travelling.
+  // Moves the marker toward the reading line's spot on the route; returns true while it is still travelling or turning.
   function updateRoute(dt) {
     if (pts.length < 2) return false;
     var vh = window.innerHeight;
@@ -128,15 +132,24 @@
     var left = root.scrollHeight - vh - window.scrollY;
     if (left < vh * 0.65) readY += vh * 0.65 - Math.max(0, left);
     var target = distanceAtY(readY);
+    var before = travelled === null ? target : travelled;
     // Reduced motion: the marker sits exactly where the scroll puts it, without easing after it.
     if (travelled === null || reduced.matches) travelled = target;
     else travelled += (target - travelled) * (1 - Math.exp(-dt / 220));
     var moving = Math.abs(target - travelled) > 0.3;
     if (!moving) travelled = target;
+    // Scrolling up turns the marker around; it keeps facing that way until the scroll goes down again.
+    var way = reduced.matches ? travelled - before : target - before;
+    if (Math.abs(way) > 1) facing = way > 0 ? 1 : -1;
 
     var m = pointAt(travelled);
-    var angle = Math.atan2(m.dy, m.dx) * 180 / Math.PI;
-    markerEl.setAttribute('transform', 'translate(' + m.x.toFixed(1) + ' ' + m.y.toFixed(1) + ') rotate(' + angle.toFixed(1) + ')');
+    var want = Math.atan2(m.dy, m.dx) * 180 / Math.PI + (facing < 0 ? 180 : 0);
+    if (heading === null || reduced.matches) heading = want;
+    else heading += wrap180(want - heading) * (1 - Math.exp(-dt / 110));
+    var turning = Math.abs(wrap180(want - heading)) > 0.5;
+    if (!turning) heading = want;
+    heading = wrap180(heading);
+    markerEl.setAttribute('transform', 'translate(' + m.x.toFixed(1) + ' ' + m.y.toFixed(1) + ') rotate(' + heading.toFixed(1) + ')');
     done.setAttribute('stroke-dasharray', travelled.toFixed(1) + ' ' + (total + 1).toFixed(1));
 
     var reached = 0;
@@ -162,7 +175,7 @@
       readout.setAttribute('data-target', String(jump));
       readout.setAttribute('aria-label', label);
     }
-    return moving;
+    return moving || turning;
   }
 
   readout.addEventListener('click', function () {
