@@ -6,8 +6,10 @@
 //  - Contours (wide screens, WebGL): terrain lines behind the page that drift and reshape very slowly, and scroll at half
 //    speed. 30 frames a second at most, paused in hidden tabs.
 //  - Loupe (wide screens with a mouse): a 2x magnifier on the in-raid screenshot, which is rendered at 2x.
+//  - Hero clip: plays (muted, looping) only while it is on screen.
 // Reduced motion keeps what moves only with your own scrolling (the logo, the marker without easing) and drops what
-// moves by itself: the contour drift and parallax, the pings, the marker's easing, smooth scrolling.
+// moves by itself: the contour drift and parallax, the pings, the marker's easing, smooth scrolling, and the clip's
+// autoplay (its controls show instead).
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -306,6 +308,28 @@
   });
   box.addEventListener('pointerleave', hideLens);
 
+  // ---------- The hero clip: plays while on screen; with reduced motion it waits for a click on its controls ----------
+  var clip = document.getElementById('hero-video');
+  var clipSeen = false;
+  function playClip() {
+    var started = clip.play();
+    if (started && started.catch) started.catch(function () { clip.controls = true; });
+  }
+  function clipMode() {
+    // Without JS the clip keeps its controls; with it, they only show where nothing plays by itself.
+    clip.controls = reduced.matches || !('IntersectionObserver' in window);
+    if (reduced.matches) clip.pause();
+    else if (clipSeen) playClip();
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      clipSeen = entries[entries.length - 1].isIntersecting;
+      if (reduced.matches) return;
+      if (clipSeen) playClip(); else clip.pause();
+    }, { threshold: 0.25 }).observe(clip);
+  }
+  clip.addEventListener('loadedmetadata', function () { relayout(); });
+
   // ---------- One frame loop: runs while scrolling, while the marker travels, and at 30 fps for the contours ----------
   var pending = false, scrolled = true, travelling = false, lastFrame = 0;
   function frame(now) {
@@ -338,8 +362,9 @@
   initContours();
   applyModes();
   measure();
+  clipMode();
   [reduced, wide, fine].forEach(function (mq) {
-    var onChange = function () { applyModes(); relayout(); };
+    var onChange = function () { applyModes(); clipMode(); relayout(); };
     if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
   });
   window.addEventListener('scroll', function () { hideLens(); request(); }, { passive: true });

@@ -20,39 +20,53 @@ python -m http.server 8000   # then open http://localhost:8000
 | --- | --- |
 | `index.html` | The page |
 | `assets/site.css` | Styles; the colours and shapes follow the app (Shturmap `docs/DESIGN.md`) |
-| `assets/site.js` | Optional behaviour: the logo moving into the header, the route marker, the drifting contour lines (WebGL) and the screenshot loupe; the page works without it |
+| `assets/site.js` | Optional behaviour: the logo moving into the header, the route marker, the drifting contour lines (WebGL), the screenshot loupe and the hero clip's play-while-visible; the page works without it |
 | `assets/fonts/` | Barlow Semi Condensed, Barlow and IBM Plex Mono, self-hosted, with their licences |
-| `assets/img/` | Screenshots, logo, favicons and the social preview image |
-| `tools/img.cs` | Composites and crops the app's renders into the screenshots |
+| `assets/img/` | Screenshots, the hero clip's poster, logo, favicons and the social preview image |
+| `assets/video/` | The hero clip |
+| `tools/make-media.ps1` | Regenerates all of the media above from the app repository |
+| `tools/img.cs` | Composites and crops the app's renders into the screenshots (used by `make-media.ps1`) |
 
 ## Media
 
-The screenshots are the app's own renders, made in the Shturmap app repository with a scripted raid:
+Every screenshot and the clip are the app's own output in a scripted fake raid on Streets of Tarkov; nothing is
+captured from a screen except Shturmap's own window for the clip. When the app changes, regenerate everything with
+one command (the app repository is expected next to this one; pass `-App` otherwise):
 
 ```powershell
-.\tools\fake-raid.ps1 -Exe <Shturmap.exe> -Out <folder> -Window 1600x900 -Scale 2 [-PlanOnly] [-ShowQuest Ballet]
+.\tools\make-media.ps1            # all of it; or -Stills, -Video, -Brand for a part
 ```
 
-`-Scale 2` renders at twice the pixel density, so the screenshots stay sharp on high-DPI screens; the page shows
-them at half their pixel size (the `width` and `height` in `index.html`).
+It builds the app, renders, records, encodes and copies, then lists the files and the checks below. It needs the
+.NET 10 SDK and, for the clip, ffmpeg (`winget install --id Gyan.FFmpeg -e`). The app opens for each render (on the
+second monitor if there is one); leave it alone until the script says it's done, about two minutes.
 
-The snapshot renders the map apart from the window, so `tools/img.cs` here lays it in and crops the result (it
-needs the .NET 10 SDK):
+| File | What it shows | Made by |
+| --- | --- | --- |
+| `assets/img/raid.webp` | In a raid at position B: the raid card and the whole map (section 02, with the callouts and the loupe) | `fake-raid.ps1 -Window 1600x900 -Scale 2`, map laid in, loading cue and notice removed |
+| `assets/img/raid-card.webp` | The raid card from that view at actual size | crop of the same render |
+| `assets/img/plan-rail.webp` | Plan in the menus: Streets first and what to bring | `fake-raid.ps1 -PlanOnly`, crop |
+| `assets/img/quest-card.webp` | Ballet Lover's quest card | `fake-raid.ps1 -ShowQuest Ballet` |
+| `assets/video/hero.webm`, `hero.mp4` | The hero clip: a screenshot moves the marker, then Road Closed is pointed at, kept highlighted, zoomed to and let go; it loops | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
+| `assets/img/hero-poster.webp` | The clip's first frame, shown before it plays | ffmpeg |
+| `assets/img/logo-dark.svg`, `icon.svg`, `social-preview.png`, `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The brand | copied from the app repository's `brand/` (and its app icon); the touch icon is `icon-512.png` at 180 px |
 
-```powershell
-dotnet run tools/img.cs '--' composite window.png map.png raid.png 768 80 ex '1080,104,1780,120' ex '768,684,2180,436' ex '2948,684,220,14'
-dotnet run tools/img.cs '--' crop raid.png assets/img/raid.webp 0 0 3168 1722 3168 88
-dotnet run tools/img.cs '--' crop raid.png assets/img/raid-card.webp 0 250 768 1010 768 100
-dotnet run tools/img.cs '--' crop plan.png assets/img/plan-rail.webp 0 240 768 1400 768 100
-dotnet run tools/img.cs '--' crop card.png assets/img/quest-card.webp 0 0 720 634 720 100
-```
+The stills are rendered at twice the pixel density and shown at half their pixel size (the `width` and `height` in
+`index.html`), so they stay sharp on high-DPI screens. Interface crops are lossless WebP; the whole raid view and
+the clip are lossy because they are mostly map. The script's comments, and the one at the top of `tools/img.cs`,
+explain each step and the crop rectangles.
 
-In PowerShell, quote `--` and the comma lists, or they don't reach the tool. Quality 100 writes lossless WebP, which
-keeps the interface text sharp; the full raid view is lossy (88) because it is mostly map.
+After re-recording, check by hand:
 
-The comment at the top of `tools/img.cs` explains each command. The `ex` rectangles remove the loading cue and
-notice that a snapshot keeps on screen. If you move a screenshot's contents, also move its numbered callouts in
-`index.html`.
+- **The numbered callouts** on `raid.webp` in `index.html`: their `left`/`top` are percent positions on the image.
+  Find a spot's pixels with `dotnet run tools/img.cs '--' sample <png> x y`, then divide by 3168 x 1722.
+- **Text that quotes the images**, which must match the new ones: the raid card's alt text ("next objective 69 m
+  ahead-left, nearest extract 94 m to the right"), Plan's ("Streets of Tarkov first, five quests to complete and one
+  to progress") and the quest card's ("the objective 300 m ahead and 9 m up"), the hero clip's `aria-label` (the quest
+  it points at) and the figure captions.
+- **The crop rectangles** in `make-media.ps1`, if the rail's layout moved.
+- **The `width` and `height` attributes** in `index.html`, if an image or the clip changed size.
+- **The clip:** play it through once; it should loop without a jump.
 
 ## Launch
 
@@ -70,7 +84,7 @@ The site's code and text are under the [MIT licence](LICENSE).
 
 The MIT licence does not cover:
 
-- **Screenshots.** They contain map artwork © Shebuka and contributors
+- **Screenshots and the clip.** They contain map artwork © Shebuka and contributors
   ([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)) and Battlestate Games' art.
 - **Fonts.** They are under the SIL Open Font License 1.1: `assets/fonts/OFL-Barlow.txt` and
   `assets/fonts/OFL-IBMPlexMono.txt`.
