@@ -7,13 +7,13 @@
 //
 //   composite <window.png> <map.png> <out.png> mapX mapY [ex x,y,w,h ...]
 //       The app's snapshot renders the map separately (the window shows it black). Lays map.png under the
-//       window's empty map area at mapX, mapY (384, 40 for a 1600x900 window). Every "ex" rectangle is taken
+//       window's empty map area at mapX, mapY (384, 40 for a 1600x900 window; 768, 80 at -Scale 2). Every "ex" rectangle is taken
 //       from the map regardless, to remove what the snapshot holds on screen over it (the RAID LOADING cue,
 //       the loading notice).
 //
 //   crop <in> <out> x y w h [width] [quality]
 //       Crops, scales to width (default: w, no scaling) and encodes by the output's extension:
-//       .webp or .jpg at quality (default 82), anything else as PNG.
+//       .webp or .jpg at quality (default 82; 100 is lossless WebP), anything else as PNG.
 using SkiaSharp;
 
 switch (args.Length > 0 ? args[0] : "")
