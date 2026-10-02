@@ -82,7 +82,7 @@ if ($Video) {
   Ffmpeg -i $cutOut '-frames:v' 1 $first
   $fadeAt = ($length - 0.6).ToString('0.000', $invariant)
   Ffmpeg -i $cutOut -loop 1 -framerate 30 -t 0.6 -i $first -filter_complex "[0:v]format=gbrp,fps=30,settb=1/30[a];[1:v]format=gbrp,fps=30,settb=1/30[b];[a][b]xfade=transition=fade:duration=0.6:offset=$fadeAt" '-c:v' libx264rgb -preset ultrafast -qp 0 $loop
-  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libvpx-vp9 -crf 37 '-b:v' 0 -row-mt 1 -deadline good -cpu-used 2 -g 60 -an (Join-Path $videoDir 'hero.webm')
+  Ffmpeg -i $loop -vf format=yuv420p '-c:v' libvpx-vp9 -crf 38 '-b:v' 0 -row-mt 1 -deadline good -cpu-used 2 -g 60 -an (Join-Path $videoDir 'hero.webm')
   Ffmpeg -i $loop -vf format=yuv420p '-c:v' libx264 '-profile:v' high -preset slow -crf 26 -tune stillimage -g 60 -movflags +faststart -an (Join-Path $videoDir 'hero.mp4')
   Ffmpeg -i $first '-c:v' libwebp -quality 85 (Join-Path $img 'hero-poster.webp')
 }
