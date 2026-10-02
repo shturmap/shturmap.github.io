@@ -3,7 +3,7 @@
 //  - Route (wide screens): a dashed route through the section numbers. A marker like the app's player marker eases
 //    along it after the scroll, faces the way it travels (it turns around when you scroll up), pings when it reaches
 //    a section, and the NEXT readout jumps to the next one.
-//  - Contours (wide screens, WebGL): terrain lines behind the page that slowly drift and reshape, and scroll at half
+//  - Contours (wide screens, WebGL): terrain lines behind the page that drift and reshape very slowly, and scroll at half
 //    speed. 30 frames a second at most, paused in hidden tabs.
 //  - Loupe (wide screens with a mouse): a 2x magnifier on the in-raid screenshot, which is rendered at 2x.
 // Reduced motion keeps what moves only with your own scrolling (the logo, the marker without easing) and drops what
@@ -200,10 +200,10 @@
     '  vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);',
     '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);',
     '}',
-    // Two layers drifting in different directions (about 10 px a second), so the terrain reshapes as it moves.
+    // Two layers drifting in different directions (about 5 px a second), so the terrain slowly reshapes as it moves.
     'float height(vec2 p) {',
     '  vec2 q = p / 560.0;',
-    '  return 14.0 * (0.65 * noise(q + vec2(0.018, 0.011) * u_time) + 0.35 * noise(q * 1.9 + vec2(5.2, 1.3) + vec2(-0.034, 0.021) * u_time));',
+    '  return 14.0 * (0.65 * noise(q + vec2(0.009, 0.0055) * u_time) + 0.35 * noise(q * 1.9 + vec2(5.2, 1.3) + vec2(-0.017, 0.0105) * u_time));',
     '}',
     'void main() {',
     '  vec2 s = vec2(gl_FragCoord.x, u_res.y - gl_FragCoord.y) / u_scale;',
