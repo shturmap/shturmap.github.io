@@ -47,7 +47,7 @@ second monitor if there is one); leave it alone until the script says it's done,
 | `assets/img/raid-card.webp` | The raid card from that view at actual size | crop of the same render |
 | `assets/img/plan-rail.webp` | Plan in the menus: Streets first and what to bring | `fake-raid.ps1 -PlanOnly`, crop |
 | `assets/img/quest-card.webp` | Ballet Lover's quest card | `fake-raid.ps1 -ShowQuest Ballet` |
-| `assets/video/hero.webm`, `hero.mp4` | The hero clip: a screenshot moves the marker, then Road Closed is pointed at, kept highlighted, zoomed to and let go; it loops | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
+| `assets/video/hero.webm`, `hero.mp4` | The hero clip, a demo raid without the game (18 s loop): a drawn screenshot key is pressed and, a moment later, the marker moves once, 29 m along Primorsky Ave, with the file name the position comes from; then a drawn pointer keeps Road Closed highlighted, the map zooms to it and its nearest objective's card stays up about five seconds; then the view goes back. The last 0.6 s fade into the first frame, so it loops without a jump | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
 | `assets/img/hero-poster.webp` | The clip's first frame, shown before it plays | ffmpeg |
 | `assets/img/logo-dark.svg`, `icon.svg`, `social-preview.png`, `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The brand | copied from the app repository's `brand/` (and its app icon); the touch icon is `icon-512.png` at 180 px |
 
@@ -66,7 +66,7 @@ After re-recording, check by hand:
   it points at) and the figure captions.
 - **The crop rectangles** in `make-media.ps1`, if the rail's layout moved.
 - **The `width` and `height` attributes** in `index.html`, if an image or the clip changed size.
-- **The clip:** play it through once; it should loop without a jump.
+- **The clip:** play it through once. The key press must come before the marker moves, the marker must move only once, and the loop must not jump.
 
 ## Launch
 
