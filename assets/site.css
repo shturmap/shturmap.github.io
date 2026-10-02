@@ -33,7 +33,7 @@ h1, h2 { text-wrap: balance; }
 
 .cond { font-family: var(--f-cond); }
 .eb { font-family: var(--f-cond); font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-.btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; background: var(--amber); color: var(--ground); font-family: var(--f-cond); font-weight: 600; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; }
+.btn { display: inline-flex; align-items: center; white-space: nowrap; min-height: 44px; padding: 0 22px; background: var(--amber); color: var(--ground); font-family: var(--f-cond); font-weight: 600; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; }
 .btn:hover { background: var(--amber-fill); color: var(--ground); }
 .btn-sm { min-height: 40px; font-size: 13px; }
 .wrap { max-width: 1360px; margin: 0 auto; padding-inline: 24px; }
@@ -96,7 +96,9 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
 /* The annotated screenshot */
 .b-anno { display: grid; grid-template-columns: minmax(0, 1fr) 250px; }
 .b-img { position: relative; border: 1px solid var(--line-strong); background: var(--rail); }
-.b-pt { position: absolute; transform: translate(-50%, -50%); width: 22px; height: 22px; display: grid; place-items: center; background: var(--amber); color: var(--ground); font-family: var(--f-mono); font-size: 12px; font-weight: 600; z-index: 2; box-shadow: 0 0 0 2px var(--ground); }
+/* Centred by line-height, not grid: WebKit (Safari, and so every browser on iOS) left the digit of an absolute grid
+   box unpainted. */
+.b-pt { position: absolute; transform: translate(-50%, -50%); width: 22px; height: 22px; display: block; line-height: 22px; text-align: center; font-variant-numeric: tabular-nums; background: var(--amber); color: var(--ground); font-family: var(--f-mono); font-size: 12px; font-weight: 600; z-index: 2; box-shadow: 0 0 0 2px var(--ground); }
 .b-ln { position: absolute; height: 1px; z-index: 1; right: -36px; background: repeating-linear-gradient(to right, rgba(201, 173, 98, .55) 0 4px, transparent 4px 8px); }
 .b-gut { position: relative; margin: 0; padding: 0; list-style: none; }
 .b-lab { position: absolute; left: 44px; right: 0; transform: translateY(-50%); display: flex; gap: 10px; font-size: 13px; line-height: 1.35; color: var(--ink); white-space: nowrap; }
@@ -154,7 +156,9 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
   .b-num { width: 56px; }
   .b-anno { grid-template-columns: 1fr; }
   .b-ln { display: none; }
-  .b-pt { width: 18px; height: 18px; font-size: 11px; }
+  .b-pt { width: 18px; height: 18px; line-height: 18px; font-size: 11px; }
+  .brand img { width: 153px; height: 30px; }
+  .btn-sm { padding: 0 12px; font-size: 12px; letter-spacing: .1em; }
   .b-gut { padding-top: 14px; display: flex; flex-direction: column; }
   .b-lab { position: static; transform: none; padding: 5px 0; white-space: normal; }
   .pair, .feat { grid-template-columns: 1fr; }
