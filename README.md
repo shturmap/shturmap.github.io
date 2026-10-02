@@ -26,6 +26,8 @@ python -m http.server 8000   # then open http://localhost:8000
 | `assets/video/` | The hero clip |
 | `tools/make-media.ps1` | Regenerates all of the media above from the app repository |
 | `tools/img.cs` | Composites and crops the app's renders into the screenshots (used by `make-media.ps1`) |
+| `tools/check-site.cs` | Checks the page before a commit (see CLAUDE.md, "Verify") |
+| `CLAUDE.md` | Working rules and the media routine, for Claude Code and anyone else |
 
 ## Media
 
@@ -47,7 +49,7 @@ second monitor if there is one); leave it alone until the script says it's done,
 | `assets/img/raid-card.webp` | The raid card from that view at actual size | crop of the same render |
 | `assets/img/plan-rail.webp` | Plan in the menus: Streets first and what to bring | `fake-raid.ps1 -PlanOnly`, crop |
 | `assets/img/quest-card.webp` | Ballet Lover's quest card | `fake-raid.ps1 -ShowQuest Ballet` |
-| `assets/video/hero.webm`, `hero.mp4` | The hero clip, a demo raid without the game (18 s loop): a drawn screenshot key is pressed and, a moment later, the marker moves once, 29 m along Primorsky Ave, with the file name the position comes from; then a drawn pointer keeps Road Closed highlighted, the map zooms to it and its nearest objective's card stays up about five seconds; then the view goes back. The last 0.6 s fade into the first frame, so it loops without a jump | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
+| `assets/video/hero.webm`, `hero.mp4` | The hero clip, a demo raid without the game (19 s loop): the window dims and pauses on a large drawn screenshot key; it is pressed, the file name the position comes from appears under it, and as the dim clears the marker moves once, 29 m along Primorsky Ave, and the raid card re-sorts; then a drawn pointer keeps Road Closed highlighted, the map zooms to it and its nearest objective's card stays up about five seconds; then the view goes back. The last 0.6 s fade into the first frame, so it loops without a jump | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
 | `assets/img/hero-poster.webp` | The clip's first frame, shown before it plays | ffmpeg |
 | `assets/img/logo-dark.svg`, `icon.svg`, `social-preview.png`, `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The brand | copied from the app repository's `brand/` (and its app icon); the touch icon is `icon-512.png` at 180 px |
 
