@@ -5,7 +5,8 @@
 //  - Contours (wide screens, WebGL): terrain lines behind the page that slowly drift and reshape, and scroll at half
 //    speed. 30 frames a second at most, paused in hidden tabs.
 //  - Loupe (wide screens with a mouse): a 2x magnifier on the in-raid screenshot, which is rendered at 2x.
-// Reduced motion: the logo swaps instead of moving, the marker snaps to sections, no pings, still contours.
+// Reduced motion keeps what moves only with your own scrolling (the logo, the marker without easing) and drops what
+// moves by itself: the contour drift and parallax, the pings, the marker's easing, smooth scrolling.
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -30,7 +31,6 @@
     var from = heroLogo.getBoundingClientRect(), to = brand.getBoundingClientRect();
     // 0 while the hero logo is below the header, 1 once it has risen its own height (and a margin) under it.
     var p = Math.min(1, Math.max(0, (head.getBoundingClientRect().bottom - from.top) / (from.height + 48)));
-    if (reduced.matches) p = p >= 0.5 ? 1 : 0;
     var state = p <= 0 ? 0 : p >= 1 ? 2 : 1;
     if (state !== flight) {
       flight = state;
@@ -128,11 +128,7 @@
     var left = root.scrollHeight - vh - window.scrollY;
     if (left < vh * 0.65) readY += vh * 0.65 - Math.max(0, left);
     var target = distanceAtY(readY);
-    if (reduced.matches) {
-      var snap = 0;
-      anchorAt.forEach(function (k) { if (cum[k] <= target + 0.5) snap = cum[k]; });
-      target = snap;
-    }
+    // Reduced motion: the marker sits exactly where the scroll puts it, without easing after it.
     if (travelled === null || reduced.matches) travelled = target;
     else travelled += (target - travelled) * (1 - Math.exp(-dt / 220));
     var moving = Math.abs(target - travelled) > 0.3;
