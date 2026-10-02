@@ -20,7 +20,7 @@ python -m http.server 8000   # then open http://localhost:8000
 | --- | --- |
 | `index.html` | The page |
 | `assets/site.css` | Styles; the colours and shapes follow the app (Shturmap `docs/DESIGN.md`) |
-| `assets/site.js` | Optional behaviour: the logo moving into the header, the route marker and the screenshot loupe; the page works without it |
+| `assets/site.js` | Optional behaviour: the logo moving into the header, the route marker, the drifting contour lines (WebGL) and the screenshot loupe; the page works without it |
 | `assets/fonts/` | Barlow Semi Condensed, Barlow and IBM Plex Mono, self-hosted, with their licences |
 | `assets/img/` | Screenshots, logo, favicons and the social preview image |
 | `tools/img.cs` | Composites and crops the app's renders into the screenshots |

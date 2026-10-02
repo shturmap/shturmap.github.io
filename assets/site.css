@@ -41,6 +41,8 @@ h1, h2 { text-wrap: balance; }
 /* The sheet: a 96 px grid, with the route through the section numbers drawn over it (site.js) */
 .sh { position: relative; z-index: 1; background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size: 96px 96px; }
 #main { position: relative; z-index: 1; }
+#bg { position: fixed; inset: 0; z-index: 0; display: none; width: 100%; height: 100%; pointer-events: none; }
+.gl-on #bg { display: block; }
 .route { position: absolute; left: 0; top: 0; z-index: 0; display: none; overflow: visible; pointer-events: none; }
 .route-on .route { display: block; }
 .route-ahead { fill: none; stroke: var(--amber); stroke-opacity: .45; stroke-width: 1.5; stroke-dasharray: 6 7; }
