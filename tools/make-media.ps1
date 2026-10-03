@@ -32,11 +32,12 @@ function ImgTool {
 }
 
 if ($Stills -or $Video) {
-  Write-Output 'Building the app...'
-  & $dotnet build (Join-Path $App 'src\Shturmap.App\Shturmap.App.csproj') -v q -nologo | Out-Null
+  # The release's folder build (eng\publish.ps1), never a Debug build: Debug builds are developer builds now, titled
+  # "Shturmap DEV" with a cyan icon and the developer tools, and the clip records the whole window.
+  Write-Output 'Building the app (release folder build)...'
+  & (Join-Path $App 'eng\publish.ps1') | Out-Null
   if ($LASTEXITCODE -ne 0) { throw 'The app did not build.' }
-  $exe = Get-ChildItem (Join-Path $App 'src\Shturmap.App\bin') -Recurse -Filter Shturmap.exe |
-    Sort-Object LastWriteTime -Descending | Select-Object -First 1 -ExpandProperty FullName
+  $exe = Join-Path $App 'artifacts\Shturmap\Shturmap.exe'
 }
 
 if ($Stills) {
@@ -48,8 +49,10 @@ if ($Stills) {
   & $fakeRaid -Exe $exe -Out $plan -Window 1600x900 -Scale 2 -PlanOnly | Out-Null
   Write-Output 'Rendering a quest card...'
   & $fakeRaid -Exe $exe -Out $quest -Window 1600x900 -Scale 2 -ShowQuest Ballet | Out-Null
-  # The snapshot draws the map apart from the window: lay it in, without the loading cue and notice it keeps up.
-  ImgTool composite "$raid\window.png" "$raid\map.png" "$work\raid.png" 768 80 ex '1080,104,1780,120' ex '768,684,2180,436' ex '2948,684,220,14'
+  # The snapshot draws the map apart from the window: lay it in, without the loading cue and notice it keeps up. The
+  # cue's band (with the kit's picture row since 2026-10-03) spans rows 644-1157 at 2x. The floor picker (x 2956-3135
+  # from row 1070) stays: beside it only the band's bottom line goes, above it the whole band.
+  ImgTool composite "$raid\window.png" "$raid\map.png" "$work\raid.png" 768 80 ex '1080,104,1780,120' ex '768,640,2188,522' ex '2956,640,212,428' ex '3136,1150,32,12'
   ImgTool composite "$plan\window.png" "$plan\map.png" "$work\plan.png" 768 80
   # Quality 100 is lossless WebP: interface text stays sharp. The whole raid view is mostly map, so lossy.
   ImgTool crop "$work\raid.png" "$img\raid.webp" 0 0 3168 1722 3168 88
