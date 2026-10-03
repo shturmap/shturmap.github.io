@@ -1,6 +1,10 @@
 /* Shturmap website. A map sheet: a 72 px reference column (section numbers and the route) beside one content
    column, over a 96 px grid. The grid is CSS by default; site.js redraws it in WebGL with faint contours and the
-   route, on wide screens. Colours, square corners and hairlines follow the app (Shturmap docs/DESIGN.md §4). */
+   route, on wide screens. Colours, type roles, square corners and hairlines are the app's design system (Shturmap
+   docs/DESIGN.md §4, "Design system"): the :root colours are its tokens under the same names (Ground → --ground,
+   LineStrong → --line-strong, …; WebInkSoft, WebDim and WebTealText are the website's own --ink-soft, --dim and
+   --teal-text), and its tests check that every colour here is one of them. Barlow, Barlow Semi Condensed and IBM
+   Plex Mono stand in for Bahnschrift, which may be shown on screen but not served as a web font. */
 
 @font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/BarlowSemiCondensed-Medium.woff2') format('woff2'); }
 @font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/BarlowSemiCondensed-SemiBold.woff2') format('woff2'); }
@@ -11,9 +15,9 @@
 :root {
   color-scheme: dark;
   --ground: #0B0C0B; --rail: #101110; --panel: #151614; --raised: #1E1F1B;
-  --line: #2A2B27; --line-strong: #45463F; --grid: #151614;
-  --ink: #D9D5C4; --ink-2: #BDB9A8; --muted: #8A8778; --dim: #6E6C60;
-  --amber: #C9AD62; --sand: #E9E2C8; --amber-hi: #E2CF9C; --amber-fill: #D6BE7E; --teal: #8FB8B1; --teal-line: #6F9A94;
+  --line: #2A2B27; --line-strong: #45463F; --grid: var(--panel);
+  --ink: #D9D5C4; --ink-soft: #BDB9A8; --muted: #8A8778; --dim: #6E6C60;
+  --amber: #C9AD62; --sand: #E9E2C8; --amber-hi: #E2CF9C; --amber-hover: #D6BE7E; --teal-text: #8FB8B1; --teal: #6F9A94;
   --f-cond: 'Barlow Semi Condensed', 'Bahnschrift', 'Arial Narrow', sans-serif;
   --f-body: 'Barlow', 'Bahnschrift', system-ui, sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
@@ -34,7 +38,7 @@ h1, h2 { text-wrap: balance; }
 .cond { font-family: var(--f-cond); }
 .eb { font-family: var(--f-cond); font-weight: 600; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 .btn { display: inline-flex; align-items: center; white-space: nowrap; min-height: 44px; padding: 0 22px; background: var(--amber); color: var(--ground); font-family: var(--f-cond); font-weight: 600; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; }
-.btn:hover { background: var(--amber-fill); color: var(--ground); }
+.btn:hover { background: var(--amber-hover); color: var(--ground); }
 .btn-sm { min-height: 40px; font-size: 13px; }
 .wrap { max-width: 1360px; margin: 0 auto; padding-inline: 24px; }
 
@@ -75,7 +79,7 @@ h1, h2 { text-wrap: balance; }
 .b-row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 24px; padding-block: 80px; border-top: 1px solid var(--line); }
 .b-row:first-of-type { border-top: 0; }
 .b-num { align-self: start; border-top: 2px solid var(--amber); padding: 6px 0 0 16px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
-.lead { margin: 0; color: var(--ink-2); max-width: 640px; }
+.lead { margin: 0; color: var(--ink-soft); max-width: 640px; }
 .h { margin: 0; font-family: var(--f-cond); font-size: 40px; line-height: 1.08; font-weight: 600; }
 .stack { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .note { margin: 0; font-size: 14px; color: var(--muted); }
@@ -89,7 +93,7 @@ h1, h2 { text-wrap: balance; }
 .hero-media { margin: 14px 0 0; display: flex; flex-direction: column; gap: 10px; }
 .hero-video { display: block; width: 100%; height: auto; border: 1px solid var(--line-strong); background: var(--rail); }
 h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; color: var(--ink); }
-.hero-sub { margin: 0; max-width: 680px; font-size: 19px; color: var(--ink-2); }
+.hero-sub { margin: 0; max-width: 680px; font-size: 19px; color: var(--ink-soft); }
 .cta { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
 .cta small { font-size: 14px; color: var(--muted); }
 
@@ -123,17 +127,17 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
 .io-row { display: grid; grid-template-columns: 190px minmax(0, 1fr) 240px; gap: 8px 28px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
 .io-src { font-family: var(--f-mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
 .io-raw { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.io-raw code { font-family: var(--f-mono); font-size: 13.5px; line-height: 1.7; color: var(--ink-2); overflow-wrap: anywhere; }
+.io-raw code { font-family: var(--f-mono); font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); overflow-wrap: anywhere; }
 .io-out { display: flex; gap: 10px; color: var(--ink); }
 .io-out::before { content: '→'; color: var(--amber); font-family: var(--f-mono); }
 .dim { color: var(--dim); }
 .s-pos { color: var(--amber); border-bottom: 1px solid var(--amber); }
-.s-rot { color: var(--teal); border-bottom: 1px solid var(--teal-line); }
+.s-rot { color: var(--teal-text); border-bottom: 1px solid var(--teal); }
 .s-clk { color: var(--ink); border-bottom: 1px solid var(--ink); }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 18px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
 .legend span::before { content: ''; display: inline-block; width: 14px; height: 2px; margin-right: 6px; vertical-align: middle; background: currentColor; }
 .legend .l-pos { color: var(--amber); }
-.legend .l-rot { color: var(--teal); }
+.legend .l-rot { color: var(--teal-text); }
 .legend .l-clk { color: var(--ink); }
 .never { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); column-gap: 40px; }
 .never li { padding: 10px 0; border-bottom: 1px solid var(--line); }
@@ -153,7 +157,7 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
 .faq[open] summary::after { content: '−'; }
 .faq summary:hover { color: var(--amber-hi); }
 .faq summary:focus-visible { outline: 2px solid var(--amber-hi); outline-offset: 3px; }
-.faq-a { display: flex; flex-direction: column; gap: 10px; max-width: 720px; padding: 0 0 18px; color: var(--ink-2); }
+.faq-a { display: flex; flex-direction: column; gap: 10px; max-width: 720px; padding: 0 0 18px; color: var(--ink-soft); }
 .faq-a p { margin: 0; }
 
 .site-foot { background: var(--ground); border-top: 1px solid var(--line); }
