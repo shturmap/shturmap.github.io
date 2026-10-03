@@ -76,7 +76,7 @@
         <figure class="hero-media">
           <video class="hero-video" id="hero-video" muted loop playsinline controls preload="metadata" width="1584" height="860"
                  poster="assets/img/hero-poster.webp"
-                 aria-label="Shturmap in a demo raid on Streets of Tarkov, played without the game: a drawn press of the screenshot key moves the player's marker once; then a drawn pointer keeps the quest Road Closed highlighted, the map zooms to it, and the card of its nearest objective opens">
+                 aria-label="Shturmap in a demo raid on Streets of Tarkov, played without the game: a drawn press of the screenshot key moves the player's marker once; then a drawn pointer opens the card of the quest Road Closed and picks it for the raid, and the map zooms to its places">
             <source src="assets/video/hero.webm" type="video/webm">
             <source src="assets/video/hero.mp4" type="video/mp4">
           </video>
@@ -125,7 +125,7 @@
           </figure>
           <div class="stack" style="align-self: center">
             <div class="eb">Raid card</div>
-            <p class="lead">The quests you can work on here, ordered by the nearest objective. Each line says how far, which way, how far up or down, and what to bring for it.</p>
+            <p class="lead">The quests you can work on here, the ones you picked first, ordered by the nearest objective. Each line says how far, which way, how far up or down, and what to bring for it.</p>
           </div>
         </div>
       </div>
@@ -139,6 +139,7 @@
             <div class="ref-line"><span class="eb">Before the raid</span></div>
             <h2 class="h">Pick the map that gets the most done.</h2>
             <p class="lead">Maps ranked by how many of your quests they finish or move on. What to bring, and where to get it: trader, flea, barter or loose on the map.</p>
+            <p class="lead">Pick the quests you want to do, and they come first: on the map and in what to bring. When the raid starts loading, Shturmap shows the kit to check, while you can still cancel.</p>
           </div>
           <figure class="fig">
             <img src="assets/img/plan-rail.webp" width="384" height="700" alt="Plan: Streets of Tarkov first, five quests to complete and one to progress, and the items to bring with where to get each" style="max-width: 384px; width: 100%">
@@ -238,7 +239,7 @@
         <h2 class="h">Native Windows app. No Electron.</h2>
         <p class="lead">Written in C# on .NET and WinUI 3, with the map drawn on your GPU. No browser engine, no web page in a wrapper. It opens in under a second.</p>
         <p class="get-line">Free and open source (MIT). Windows 10 and 11.</p>
-        <p class="lead">Install it with <code>Shturmap-Setup.exe</code> from the GitHub releases; it keeps itself up to date. Shturmap is in private testing, so expect rough edges. Something wrong or missing? Tell us from the app: help (?) → Report a problem or idea.</p>
+        <p class="lead">Install it with <code>Shturmap-Setup.exe</code> from the GitHub releases; it keeps itself up to date. Shturmap is in private testing, so expect rough edges. Something wrong or missing? Tell us from the app, with the feedback button at the top right.</p>
         <a class="btn" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
       </div>
     </section>
@@ -263,7 +264,7 @@
           <details class="faq" id="faq-maps">
             <summary>Do I need to know the maps?</summary>
             <div class="faq-a">
-              <p>No, it helps you learn them. The map shows your objectives, the extracts for your side, boss and Scav spawn zones, and the floor you're on. The raid card beside it gives every objective's distance and direction from your last screenshot, and says what each extract takes to leave there.</p>
+              <p>No, it helps you learn them. The map shows your objectives, the extracts for your side, where bosses, AI squads and Scavs spawn, locked doors with the key that opens them, switches, minefields and sniper zones, and the floor you're on. The raid card beside it gives every objective's distance and direction from your last screenshot, and says what each extract takes to leave there.</p>
             </div>
           </details>
           <details class="faq" id="faq-position">
@@ -282,7 +283,7 @@
           <details class="faq" id="faq-which-maps">
             <summary>Which maps does it cover?</summary>
             <div class="faq-a">
-              <p>The maps tarkov.dev covers. The Lab, Labyrinth and Icebreaker have no usable map artwork, so they are drawn as a plain 10 m grid with your position, objectives and extracts.</p>
+              <p>The maps tarkov.dev covers. The Lab, Labyrinth and Icebreaker are drawn from tarkov.dev's top-down renders; when those can't be loaded, as a plain 10 m grid with your position, objectives and extracts.</p>
             </div>
           </details>
           <details class="faq" id="faq-language">
@@ -302,13 +303,14 @@
             <summary>What do I need, and how do I install it?</summary>
             <div class="faq-a">
               <p>64-bit Windows 10 (version 2004 or later) or Windows 11. Download <code>Shturmap-Setup.exe</code> from the GitHub releases and run it: it installs for your Windows user only, without admin rights. The installer isn't signed, so Windows warns about it; click More info, then Run anyway.</p>
-              <p>Shturmap keeps itself up to date. It checks at start and every 6 hours, downloads in the background and applies the update the next time you start it, never during a raid. Help (?) → Updates switches that to Tell me only or Off.</p>
+              <p>Shturmap keeps itself up to date. It checks at start and every 6 hours, downloads in the background and applies the update the next time you start it, never during a raid. Settings (the gear at the top right) → Updates switches that to Tell me only or Off.</p>
+              <p>It finds the game by itself; if it doesn't, choose the game folder in settings. Without the game on the PC you can still browse the maps. To remove Shturmap, use Windows Settings → Apps, or Uninstall Shturmap in its settings, which can delete its data too.</p>
             </div>
           </details>
           <details class="faq" id="faq-report">
             <summary>Something's wrong or missing?</summary>
             <div class="faq-a">
-              <p>Tell us from the app: help (?) → Report a problem or idea. No account needed, and you can see exactly what's sent before you send it. Shturmap is in private testing, so expect rough edges.</p>
+              <p>Tell us from the app: the feedback button at the top right. No account needed, and you can see exactly what's sent before you send it. Shturmap is in private testing, so expect rough edges.</p>
             </div>
           </details>
         </div>
