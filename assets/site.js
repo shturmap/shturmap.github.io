@@ -7,6 +7,7 @@
 //    speed. 30 frames a second at most, paused in hidden tabs.
 //  - Loupe (wide screens with a mouse): a 2x magnifier on the in-raid screenshot, which is rendered at 2x.
 //  - Hero clip: plays (muted, looping) only while it is on screen.
+//  - Questions: a link to one (#faq-banned) opens its answer.
 // Reduced motion keeps what moves only with your own scrolling (the logo, the marker without easing) and drops what
 // moves by itself: the contour drift and parallax, the pings, the marker's easing, smooth scrolling, and the clip's
 // autoplay (its controls show instead).
@@ -17,6 +18,14 @@
   var wide = window.matchMedia('(min-width: 761px)');
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
   var SVG = 'http://www.w3.org/2000/svg';
+
+  // ---------- A link to a question opens its answer ----------
+  function openLinkedQuestion() {
+    var target = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    if (target && target.tagName === 'DETAILS') target.open = true;
+  }
+  window.addEventListener('hashchange', openLinkedQuestion);
+  openLinkedQuestion();
 
   // ---------- The logo moves into the header ----------
   var head = document.querySelector('.site-head');
