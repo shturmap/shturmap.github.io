@@ -149,7 +149,7 @@
           <div class="stack">
             <div class="eb">Quest cards</div>
             <h2 class="h">The quest on one card.</h2>
-            <p class="lead">Objectives, keys and items for any quest, one hover away. Pin a card and its distances stay live while you play. The wiki is one click away for the rest.</p>
+            <p class="lead">Objectives, keys and items for any quest, one hover away. Pop out a card and its distances stay live while you play. The wiki is one click away for the rest.</p>
             <div class="stack tracking">
               <div class="eb">Quest tracking</div>
               <p class="cond">Quests track themselves.</p>
@@ -179,7 +179,7 @@
             <div class="io-raw" role="cell">
               <code><span class="dim">2026-01-01[13-35]_</span><span class="s-pos">40.00, 2.50, 120.00</span><span class="dim">_</span><span class="s-rot">0.01000, 0.99900, -0.04000, 0.02000</span><span class="dim">_</span><span class="s-clk">14.13</span><span class="dim"> (0).png</span></code>
               <div class="legend"><span class="l-pos">position x, y, z</span><span class="l-rot">facing</span><span class="l-clk">raid clock, 14.13 h = 14:08</span></div>
-              <p class="note">Written by the game when you press your screenshot key. Shturmap reads the name; the image stays unopened.</p>
+              <p class="note">Written by the game when you press your screenshot key; Battlestate's own support article on <a href="https://www.escapefromtarkov.com/support/knowledge/437">reporting a bug</a> describes these coordinates in the name. Shturmap reads the name; the image stays unopened.</p>
             </div>
             <div class="io-out" role="cell">where you are and which way you face</div>
           </div>
@@ -208,6 +208,11 @@
             <div class="io-raw" role="cell"><code>tasks · maps · items · map artwork</code></div>
             <div class="io-out" role="cell">quests, maps, items (public)</div>
           </div>
+          <div class="io-row" role="row">
+            <div class="io-src" role="cell">GitHub releases</div>
+            <div class="io-raw" role="cell"><code>shturmap/shturmap · latest version</code></div>
+            <div class="io-out" role="cell">a newer Shturmap, if there is one (you can turn this off)</div>
+          </div>
         </div>
         <div class="stack" style="gap: 8px">
           <div class="eb">It never</div>
@@ -217,10 +222,12 @@
             <li>captures your screen or draws over the game</li>
             <li>changes game files</li>
             <li>shows you anything about other players</li>
-            <li>sends anything about you anywhere</li>
+            <li>shares your position with anyone, or takes a screenshot for you</li>
+            <li>sends anything about you, unless you send a report or allow crash reports</li>
           </ul>
         </div>
         <p class="marker-line">Your marker moves when you press your screenshot key. Nothing else moves it.</p>
+        <p class="note risk">Not made or endorsed by Battlestate Games. Its License Agreement (section 4.3.4) lets Battlestate decide which outside software it permits, so there is no guarantee against sanctions: use Shturmap at your own risk. More in <a href="#faq-banned">the questions</a> below.</p>
       </div>
     </section>
 
@@ -231,14 +238,135 @@
         <h2 class="h">Native Windows app. No Electron.</h2>
         <p class="lead">Written in C# on .NET and WinUI 3, with the map drawn on your GPU. No browser engine, no web page in a wrapper. It opens in under a second.</p>
         <p class="get-line">Free and open source (MIT). Windows 10 and 11.</p>
+        <p class="lead">Install it with <code>Shturmap-Setup.exe</code> from the GitHub releases; it keeps itself up to date. Shturmap is in private testing, so expect rough edges. Something wrong or missing? Tell us from the app: help (?) → Report a problem or idea.</p>
         <a class="btn" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
+      </div>
+    </section>
+
+    <section class="b-row" id="faq" data-ref="06" data-name="Questions">
+      <div class="b-num">06</div>
+      <div class="stack" style="gap: 36px">
+        <div class="stack" style="max-width: 720px">
+          <div class="ref-line"><span class="eb">Questions</span></div>
+          <h2 class="h">What players ask.</h2>
+        </div>
+
+        <div class="faq-group">
+          <h3 class="eb">New to Tarkov, or to Shturmap</h3>
+          <details class="faq" id="faq-what">
+            <summary>What is Shturmap, and what isn't it?</summary>
+            <div class="faq-a">
+              <p>A second window for Escape from Tarkov. Before a raid: which map gets the most of your active quests done, and what to bring. In the raid: the map with your objectives, the extracts and the spot where you took your last screenshot.</p>
+              <p>It isn't a live position: your marker shows where you were when you last pressed your screenshot key. It shows nothing about other players, and it does nothing in the game for you.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-maps">
+            <summary>Do I need to know the maps?</summary>
+            <div class="faq-a">
+              <p>No, it helps you learn them. The map shows your objectives, the extracts for your side, boss and Scav spawn zones, and the floor you're on. The raid card beside it gives every objective's distance and direction from your last screenshot, and says what each extract takes to leave there.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-position">
+            <summary>How does it know where I am?</summary>
+            <div class="faq-a">
+              <p>When you press your screenshot key, the game saves a screenshot and writes your position and facing into its file name. Shturmap reads that name, never the image, and moves your marker there. It reads which key is yours from the game's settings.</p>
+              <p>Nothing else moves the marker. Press the key again when you want a fresh position; an old one is marked with its age.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-modes">
+            <summary>PvE or PvP?</summary>
+            <div class="faq-a">
+              <p>Both, and the seasonal mode. Shturmap reads the mode from the game's log and loads that mode's quests and data. For PvP, see <a href="#faq-pvp">the question about fairness</a> below.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-which-maps">
+            <summary>Which maps does it cover?</summary>
+            <div class="faq-a">
+              <p>The maps tarkov.dev covers. The Lab, Labyrinth and Icebreaker have no usable map artwork, so they are drawn as a plain 10 m grid with your position, objectives and extracts.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-language">
+            <summary>Does it work in my language?</summary>
+            <div class="faq-a">
+              <p>Quest, map and item names follow your game's language, from tarkov.dev; where tarkov.dev has no texts in it, they are in English. Shturmap's own words are English.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-cost">
+            <summary>What does it cost, and what does it send?</summary>
+            <div class="faq-a">
+              <p>Nothing. It is free and open source (MIT).</p>
+              <p>It sends nothing about you or your game unless you send a report or allow crash reports. Its other traffic downloads public data and map artwork, and asks GitHub whether there's a newer Shturmap (you can turn that off). What a report holds and who receives it is in the <a href="https://github.com/shturmap/shturmap/blob/main/PRIVACY.md">privacy notice</a>.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-install">
+            <summary>What do I need, and how do I install it?</summary>
+            <div class="faq-a">
+              <p>64-bit Windows 10 (version 2004 or later) or Windows 11. Download <code>Shturmap-Setup.exe</code> from the GitHub releases and run it: it installs for your Windows user only, without admin rights. The installer isn't signed, so Windows warns about it; click More info, then Run anyway.</p>
+              <p>Shturmap keeps itself up to date. It checks at start and every 6 hours, downloads in the background and applies the update the next time you start it, never during a raid. Help (?) → Updates switches that to Tell me only or Off.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-report">
+            <summary>Something's wrong or missing?</summary>
+            <div class="faq-a">
+              <p>Tell us from the app: help (?) → Report a problem or idea. No account needed, and you can see exactly what's sent before you send it. Shturmap is in private testing, so expect rough edges.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="faq-group">
+          <h3 class="eb">For experienced players</h3>
+          <details class="faq" id="faq-reads">
+            <summary>What does it read, and what does it never do?</summary>
+            <div class="faq-a">
+              <p>It reads the file names of your screenshots, the game's application and push-notification logs, Control.ini and Game.ini, and public data from tarkov.dev; the list is under <a href="#a4">Boundaries</a>. It never touches the game process or its memory, sends no keystrokes or mouse input, doesn't capture your screen or draw over the game, and changes no game files.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-banned">
+            <summary>Is this allowed? Can I get banned?</summary>
+            <div class="faq-a">
+              <p>Battlestate hasn't said anything about tools that read screenshot names, for or against, and we found no verified ban for using one, though tools like this have been around since at least 2023. That is our research as of 3 October 2026, not a promise.</p>
+              <p>Battlestate's License Agreement (section 4.3.4) forbids outside software that "captures, collects, counts or otherwise 'retrieves' information reproduced or stored by" the game, unless Battlestate permits it at its own discretion, and it hasn't permitted any tool like this. Read literally, that covers every companion app, Shturmap included. So there is no guarantee against sanctions: use it at your own risk.</p>
+              <p>Shturmap is an unofficial fan project, not made or endorsed by Battlestate Games.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-coordinates">
+            <summary>Where do the coordinates come from?</summary>
+            <div class="faq-a">
+              <p>From the game. It writes them into every screenshot's file name, and Battlestate's own support article on <a href="https://www.escapefromtarkov.com/support/knowledge/437">reporting a bug</a> says so: "The name of the screenshot contains the coordinates of the place where the screenshot was taken." That is the source of the coordinates, not an endorsement of Shturmap.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-pvp">
+            <summary>Isn't a map with my position unfair in PvP?</summary>
+            <div class="faq-a">
+              <p>Some players think so; others compare it to keeping a map open on a second screen. Shturmap shows only where you were when you last pressed your screenshot key, and only to you. It is at its most useful for learning maps and in PvE.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-share">
+            <summary>Does it share my position, or take screenshots for me?</summary>
+            <div class="faq-a">
+              <p>No. Your position stays with you: Shturmap never shares it with your squad or anyone else. And it never takes a screenshot for you: no timer, no automatic key press. Your marker moves only when you press your screenshot key.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-source">
+            <summary>Can I check what it does?</summary>
+            <div class="faq-a">
+              <p>Yes. The code is open source on <a href="https://github.com/shturmap/shturmap">GitHub</a> under the MIT licence. A test fails if the code ever uses the Windows functions for reading another program's memory, sending input, hooking or capturing the screen.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-change">
+            <summary>What if Battlestate takes the coordinates out of the screenshot names?</summary>
+            <div class="faq-a">
+              <p>Then Shturmap shows no position, and the rest keeps working: maps ranked by what you can get done, what to bring, quest cards, and the map with your objectives and the extracts.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-foot">
     <div class="wrap">
-      <p>Unofficial fan project, not made or endorsed by Battlestate Games. Escape from Tarkov and its game content are trademarks and copyrights of Battlestate Games and its licensors.</p>
+      <p>Unofficial fan project, not made or endorsed by Battlestate Games; use it at your own risk (<a href="#faq-banned">why</a>). Escape from Tarkov and its game content are trademarks and copyrights of Battlestate Games and its licensors.</p>
       <p>Data: <a href="https://tarkov.dev">tarkov.dev</a> by The Hideout. Maps: Shebuka and contributors, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>. · Inspired by <a href="https://github.com/MelGP/tarkoveyes">TarkovEyes</a>. · No cookies, no analytics, no third-party requests.</p>
     </div>
   </footer>

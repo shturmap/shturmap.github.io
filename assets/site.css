@@ -139,6 +139,22 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
 .never li { padding: 10px 0; border-bottom: 1px solid var(--line); }
 .marker-line { margin: 0; font-family: var(--f-cond); font-size: 26px; line-height: 1.25; font-weight: 600; color: var(--amber); }
 .get-line { margin: 0; font-family: var(--f-cond); font-size: 30px; line-height: 1.2; font-weight: 500; }
+.risk { max-width: 720px; }
+.lead code, .faq-a code { font-family: var(--f-mono); font-size: .88em; color: var(--ink); }
+
+/* Questions: one hairline list per audience; each answer opens in place (details/summary, no script) */
+.faq-group { display: flex; flex-direction: column; max-width: 860px; }
+.faq-group h3 { margin: 0 0 8px; }
+.faq { border-bottom: 1px solid var(--line); }
+.faq-group h3 + .faq { border-top: 1px solid var(--line-strong); }
+.faq summary { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 14px 0; list-style: none; cursor: pointer; font-family: var(--f-cond); font-weight: 600; font-size: 21px; line-height: 1.3; color: var(--ink); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; flex: none; font-family: var(--f-mono); font-weight: 400; color: var(--amber); }
+.faq[open] summary::after { content: '−'; }
+.faq summary:hover { color: var(--amber-hi); }
+.faq summary:focus-visible { outline: 2px solid var(--amber-hi); outline-offset: 3px; }
+.faq-a { display: flex; flex-direction: column; gap: 10px; max-width: 720px; padding: 0 0 18px; color: var(--ink-2); }
+.faq-a p { margin: 0; }
 
 .site-foot { background: var(--ground); border-top: 1px solid var(--line); }
 .site-foot .wrap { padding-block: 32px 48px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.6; color: var(--muted); }
@@ -164,6 +180,7 @@ h1 { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(3
   .pair, .feat { grid-template-columns: 1fr; }
   .io-row { grid-template-columns: 1fr; }
   .h { font-size: 32px; }
+  .faq summary { font-size: 18px; }
   #readout { display: none !important; }
 }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
