@@ -67,7 +67,7 @@
         <div class="hero-text" id="hero-text">
           <h1>A second-monitor map for Escape from Tarkov.</h1>
           <p class="hero-sub">Your active quests' objectives, the extracts and your position on the map of the raid you're in. What you'd otherwise look up in the wiki, in one window.</p>
-          <p class="lead">Quest status comes from the game's own log files. Your position comes from the name of the screenshot the game saves when you press your screenshot key. No macros, no input to the game, no access to its process.</p>
+          <p class="lead">Quest status comes from the game's own log files. Your position comes from the name of the screenshot the game saves when you press your screenshot key. No macros, no input to the game, nothing read from its memory, nothing drawn over it.</p>
         </div>
         <div class="cta">
           <a class="btn" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
@@ -154,7 +154,8 @@
             <div class="stack tracking">
               <div class="eb">Quest tracking</div>
               <p class="cond">Quests track themselves.</p>
-              <p class="lead">Started, finished, failed: Shturmap reads it from the game's own log files. Nothing to tick off.</p>
+              <p class="lead">Started, finished, failed: Shturmap reads it from the game's own log files. Nothing has to be ticked off.</p>
+              <p class="note">The logs don't say when a single objective is done, so you can tick one on its quest's card if you want the map to stop leading you there.</p>
               <p class="note">Quests you started before your oldest log aren't known.</p>
             </div>
           </div>
@@ -205,6 +206,14 @@
             <div class="io-out" role="cell">the game's language</div>
           </div>
           <div class="io-row" role="row">
+            <div class="io-src" role="cell">Windows, Steam, the launcher's settings</div>
+            <div class="io-raw" role="cell">
+              <code>uninstall entry · library list · games folder</code>
+              <p class="note">Only to find where the game is installed. Nothing else is read from the launcher's settings.</p>
+            </div>
+            <div class="io-out" role="cell">where the game and its logs are</div>
+          </div>
+          <div class="io-row" role="row">
             <div class="io-src" role="cell">tarkov.dev</div>
             <div class="io-raw" role="cell"><code>tasks · maps · items · map artwork</code></div>
             <div class="io-out" role="cell">quests, maps, items (public)</div>
@@ -218,12 +227,14 @@
         <div class="stack" style="gap: 8px">
           <div class="eb">It never</div>
           <ul class="never">
-            <li>touches the game process or its memory</li>
+            <li>reads or writes the game's memory, or loads anything into the game</li>
+            <li>opens the game's process from its own code (<a href="#faq-installer">its installer is the one exception</a>)</li>
             <li>sends keystrokes or mouse input</li>
             <li>captures your screen or draws over the game</li>
-            <li>changes game files</li>
+            <li>changes game files or settings, or reads the launcher's login data</li>
+            <li>changes or deletes your files (<a href="#faq-delete">one exception, which you turn on yourself</a>)</li>
             <li>shows you anything about other players</li>
-            <li>shares your position with anyone, or takes a screenshot for you</li>
+            <li>shares your position with anyone, or takes a screenshot for you (what comes closest is <a href="#faq-cost">said below</a>)</li>
             <li>sends anything about you, unless you send a report or allow crash reports</li>
           </ul>
         </div>
@@ -291,6 +302,7 @@
             <div class="faq-a">
               <p>Nothing. It is free and open source (MIT).</p>
               <p>It sends nothing about you or your game unless you send a report or allow crash reports. Its other traffic downloads public data and map artwork, and asks GitHub whether there's a newer Shturmap (you can turn that off). What a report holds and who receives it is in the <a href="https://github.com/shturmap/shturmap/blob/main/PRIVACY.md">privacy notice</a>.</p>
+              <p>One thing comes close to your position. The Lab, Labyrinth and Icebreaker are loaded from tarkov.dev's image service piece by piece, as you look at them. In a raid the part displayed is usually the part you are in, so those requests can show roughly where on the map that is, to tarkov.dev's image service and to no one else. No account, quest list or position is sent with them.</p>
             </div>
           </details>
           <details class="faq" id="faq-install">
@@ -314,7 +326,7 @@
           <details class="faq" id="faq-reads">
             <summary>What does it read, and what does it never do?</summary>
             <div class="faq-a">
-              <p>It reads the file names of your screenshots, the game's application and push-notification logs, Control.ini and Game.ini, and public data from tarkov.dev; the list is under <a href="#a4">Boundaries</a>. It never touches the game process or its memory, sends no keystrokes or mouse input, doesn't capture your screen or draw over the game, and changes no game files.</p>
+              <p>It reads the file names of your screenshots, the game's application and push-notification logs, Control.ini and Game.ini, where the game is installed (from Windows, Steam and the launcher's settings), and public data from tarkov.dev; the list is under <a href="#a4">Boundaries</a>. It never reads or writes the game's memory, never opens the game's process from its own code (<a href="#faq-installer">its installer is the one exception</a>), sends no keystrokes or mouse input, doesn't capture your screen or draw over the game, and changes no game files.</p>
             </div>
           </details>
           <details class="faq" id="faq-banned">
@@ -343,10 +355,23 @@
               <p>No. Your position stays with you: Shturmap never shares it with your squad or anyone else. And it never takes a screenshot for you: no timer, no automatic key press. Your marker moves only when you press your screenshot key.</p>
             </div>
           </details>
+          <details class="faq" id="faq-installer">
+            <summary>What does the installer do with other running programs?</summary>
+            <div class="faq-a">
+              <p>Shturmap is installed, updated and removed by <a href="https://velopack.io">Velopack</a>, an open-source installer that comes with it. While it installs Shturmap, applies an update or uninstalls it, Velopack goes through the programs running on the PC to close running copies of Shturmap. To do that it asks Windows for a handle to each running program, with the rights to read where its file is and to end it, and it ends only programs that run from Shturmap's own folder.</p>
+              <p>If the game is running at that moment, it is asked about like every other program; nothing is read from it, written to it or sent to it. To keep even this away from a running game, install Shturmap and let it update while the game is closed: under Updates in settings, Tell me only lets you choose the moment.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-delete">
+            <summary>Does it change or delete any of my files?</summary>
+            <div class="faq-a">
+              <p>No, with one exception you turn on yourself. Delete position screenshots in settings is off unless you tick it; ticked, each screenshot that gave a position is deleted 5 seconds after its name was read, for good. Screenshots already in the folder, and screenshots from the menus, stay.</p>
+            </div>
+          </details>
           <details class="faq" id="faq-source">
             <summary>Can I check what it does?</summary>
             <div class="faq-a">
-              <p>Yes. The code is open source on <a href="https://github.com/shturmap/shturmap">GitHub</a> under the MIT licence. A test fails if the code ever uses the Windows functions for reading another program's memory, sending input, hooking or capturing the screen.</p>
+              <p>Yes. The code is open source on <a href="https://github.com/shturmap/shturmap">GitHub</a> under the MIT licence. A test fails if Shturmap's own code ever uses the Windows functions for opening or reading another program, sending input, hooking or capturing the screen.</p>
             </div>
           </details>
           <details class="faq" id="faq-change">
