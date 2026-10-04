@@ -48,7 +48,7 @@ second monitor if there is one); leave it alone until the script says it's done,
 | --- | --- | --- |
 | `assets/img/raid.webp` | In a raid at position B: the raid card and the whole map (section 02, with the callouts and the loupe) | `fake-raid.ps1 -Window 1600x900 -Scale 2`, map laid in, loading cue and notice removed |
 | `assets/img/raid-card.webp` | The raid card from that view at actual size | crop of the same render |
-| `assets/img/plan-rail.webp` | Plan in the menus: Streets first and what to bring | `fake-raid.ps1 -PlanOnly`, crop |
+| `assets/img/plan-rail.webp` | Plan in the menus: the map list, Streets first, and what to bring | `fake-raid.ps1 -PlanOnly -Window 1600x1040` (taller, so BRING's rows are in view), crop |
 | `assets/img/quest-card.webp` | Ballet Lover's quest card | `fake-raid.ps1 -ShowQuest Ballet` |
 | `assets/video/hero.webm`, `hero.mp4` | The hero clip, a demo raid without the game (19 s loop): the window dims and pauses on a large drawn screenshot key; it is pressed, the file name the position comes from appears under it, and as the dim clears the marker moves once, 29 m along Primorsky Ave, and the raid card re-sorts; then a drawn pointer opens Road Closed's card and picks the quest for the raid (cyan, first in the raid card), the map zooms to its places and the card stays up about five seconds; then the pick is undone and the view goes back. The last 0.6 s fade into the first frame, so it loops without a jump | `fake-raid.ps1 -Demo` (the app's `--demo`, recorded by `tools\record-window`) |
 | `assets/img/hero-poster.webp` | The clip's first frame, shown before it plays | ffmpeg |
