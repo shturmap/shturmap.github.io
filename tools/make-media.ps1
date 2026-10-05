@@ -54,7 +54,8 @@ if ($Stills) {
   # cue's band (with the kit's picture row since 2026-10-03) spans rows 644-1157 at 2x. The floor picker (x 2956-3135
   # from row 990, since the column under it has five buttons) stays: beside it only the band's bottom line goes,
   # above it the whole band.
-  ImgTool composite "$raid\window.png" "$raid\map.png" "$work\raid.png" 768 80 ex '1080,104,1780,120' ex '768,640,2188,522' ex '2956,640,212,350' ex '3136,1150,32,12'
+  # Since the cue pictures the whole kit in 52 px cells (the app, 2026-10-04) its band is taller: rows 588-1212.
+  ImgTool composite "$raid\window.png" "$raid\map.png" "$work\raid.png" 768 80 ex '1080,104,1780,120' ex '768,584,2188,632' ex '2956,584,212,406' ex '3136,1196,32,24'
   ImgTool composite "$plan\window.png" "$plan\map.png" "$work\plan.png" 768 80
   # Quality 100 is lossless WebP: interface text stays sharp. The whole raid view is mostly map, so lossy.
   ImgTool crop "$work\raid.png" "$img\raid.webp" 0 0 3168 1722 3168 88
@@ -112,8 +113,8 @@ Get-ChildItem $img, $videoDir -File | Sort-Object FullName | ForEach-Object {
 Write-Output ''
 Write-Output 'Check by hand (README.md, "Media"):'
 Write-Output '  - the numbered callouts on raid.webp in index.html (percent positions; find them with img.cs sample)'
-Write-Output '  - alt texts and captions that quote the images: "69 m ahead-left", "five quests to complete and one to progress",'
-Write-Output '    the quest card "300 m ahead and 9 m up", the raid card "94 m to the right"'
+Write-Output '  - alt texts and captions that quote the images: "30 m ahead-left", "five quests to complete and one to progress",'
+Write-Output '    the quest card "294 m to the left and 8 m up", the raid card "138 m behind"'
 Write-Output '  - the crop rectangles above, if the rail moved'
 Write-Output '  - the width and height attributes in index.html, if an image or the clip changed size'
 Write-Output '  - the clip: play it through once; it should loop without a jump'

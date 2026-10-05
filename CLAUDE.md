@@ -8,7 +8,9 @@ working rules.
 
 - **No third-party requests.** Fonts, images and video are served from this repository; no CDNs, analytics or
   embeds. External URLs may only be links and the canonical/og URLs (`tools/check-site.cs` lists them all).
-- **Every claim literally true** of the app as it is. It reads screenshot file names (never the images), the
+- **Every claim literally true** of the app as it is. It reads screenshot file names and, of a screenshot taken in a raid, the top right corner of its picture for the
+  game's extract list (on the PC, with Windows' text recognition; nothing of the picture kept or sent; a setting turns
+  it off), the
   application and push-notification logs, Control.ini and Game.ini, where the game is installed, and public
   tarkov.dev data; it sends no input, and quest status comes only from the game's logs (an objective can be ticked
   by hand). Three things need their exact words, as in the app's README: its own code opens no handle to the game,
@@ -55,8 +57,8 @@ and never capture anything for routine checks: use the app's `--snapshot` and th
 
 - **Callouts** on `raid.webp` in `index.html`: `left`/`top` are percents of the image. Find pixels with
   `..\Shturmap\eng\dotnet.ps1 run tools/img.cs '--' sample <png> x y` and divide by 3168 x 1722.
-- **Text that quotes the images**: the alt texts and captions with numbers ("69 m ahead-left", "94 m to the
-  right", "five quests to complete and one to progress", "300 m ahead and 9 m up") and the clip's `aria-label`.
+- **Text that quotes the images**: the alt texts and captions with numbers ("30 m ahead-left", "138 m
+  behind", "five quests to complete and one to progress", "294 m to the left and 8 m up") and the clip's `aria-label`.
 - **Crop rectangles** in `make-media.ps1`, if the app's rail moved.
 - **`width` and `height`** in `index.html`, if an image or the clip changed size.
 - **The app's README** embeds `https://shturmap.github.io/assets/img/raid.webp` and repeats the hero's wording: keep

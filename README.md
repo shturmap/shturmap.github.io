@@ -46,7 +46,7 @@ second monitor if there is one); leave it alone until the script says it's done,
 
 | File | What it shows | Made by |
 | --- | --- | --- |
-| `assets/img/raid.webp` | In a raid at position B: the raid card and the whole map (section 02, with the callouts and the loupe) | `fake-raid.ps1 -Window 1600x900 -Scale 2`, map laid in, loading cue and notice removed |
+| `assets/img/raid.webp` | In a raid, 27 minutes in, with the extract list read: the raid card and the whole map (section 02, with the callouts and the loupe) | `fake-raid.ps1 -Window 1600x900 -Scale 2`, map laid in, loading cue and notice removed |
 | `assets/img/raid-card.webp` | The raid card from that view at actual size | crop of the same render |
 | `assets/img/plan-rail.webp` | Plan in the menus: the map list, Streets first, and what to bring | `fake-raid.ps1 -PlanOnly -Window 1600x1040` (taller, so BRING's rows are in view), crop |
 | `assets/img/quest-card.webp` | Ballet Lover's quest card | `fake-raid.ps1 -ShowQuest Ballet` |
@@ -63,9 +63,9 @@ After re-recording, check by hand:
 
 - **The numbered callouts** on `raid.webp` in `index.html`: their `left`/`top` are percent positions on the image.
   Find a spot's pixels with `dotnet run tools/img.cs '--' sample <png> x y`, then divide by 3168 x 1722.
-- **Text that quotes the images**, which must match the new ones: the raid card's alt text ("next objective 69 m
-  ahead-left, nearest extract 94 m to the right"), Plan's ("Streets of Tarkov first, five quests to complete and one
-  to progress") and the quest card's ("the objective 300 m ahead and 9 m up"), the hero clip's `aria-label` (the quest
+- **Text that quotes the images**, which must match the new ones: the raid card's alt text ("next objective 30 m
+  ahead-left, the nearest extract on your list 138 m behind"), Plan's ("Streets of Tarkov first, five quests to complete and one
+  to progress") and the quest card's ("the objective 294 m to the left and 8 m up"), the hero clip's `aria-label` (the quest
   it points at) and the figure captions.
 - **The crop rectangles** in `make-media.ps1`, if the rail's layout moved.
 - **The `width` and `height` attributes** in `index.html`, if an image or the clip changed size.
