@@ -23,9 +23,9 @@ working rules.
   footer keeps the Battlestate, tarkov.dev and TarkovEyes credits.
 - **Preview**: the site is public before the app's release. Everything marked `PREVIEW: remove at launch` (the
   banner, its CSS, `<meta name="robots" content="noindex">`) comes out at launch; see README.md, "Launch".
-- **Pushing**: Claude can't push this repository. Commit locally (author from the repo config, message via
-  `git commit -F <file>`), then give the owner the command:
-  `! & "C:\Program Files\Git\cmd\git.exe" -C "$env:USERPROFILE\source\repos\shturmap.github.io" push`
+- **Committing and pushing** as `shturmap`: the author, the signing key and the GitHub login (through `gh`) all come
+  from the repository's git config; write the message to a file and use `git commit -F <file>`. Every commit is
+  signed with `shturmap`'s SSH key; never commit or push with another identity or GitHub login (owner, 2026-10-07).
 
 ## Regenerate the media
 
