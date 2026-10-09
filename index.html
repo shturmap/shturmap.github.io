@@ -262,6 +262,7 @@
         <p class="lead">Written in C# on .NET and WinUI 3, with the map drawn on your GPU. No browser engine, no web page in a wrapper. It opens in under a second.</p>
         <p class="get-line">Free and open source (MIT). Windows 10 and 11.</p>
         <p class="lead">Install it with <code>Shturmap-Setup.exe</code> from the GitHub releases; it keeps itself up to date. Shturmap is in private testing, so expect rough edges. Something wrong or missing? Tell us from the app, with the feedback button at the top right.</p>
+        <p class="note">From 0.4.0, each release is built on GitHub from the public code, and you can check that your download is that build (<a href="#faq-source">how</a>).</p>
         <a class="btn" href="https://github.com/shturmap/shturmap">Get it on GitHub</a>
       </div>
     </section>
@@ -300,6 +301,12 @@
             <summary>Which maps does it cover?</summary>
             <div class="faq-a">
               <p>The maps tarkov.dev covers. The Lab, Labyrinth and Icebreaker are drawn from tarkov.dev's top-down renders; when those can't be loaded, as a plain 10 m grid with your position, objectives and extracts.</p>
+            </div>
+          </details>
+          <details class="faq" id="faq-story">
+            <summary>Does it show the story chapters?</summary>
+            <div class="faq-a">
+              <p>Not yet. Its quests come from tarkov.dev, which doesn't publish the story chapters (Falling Skies, Batya and the others), so Shturmap shows the traders' quests only.</p>
             </div>
           </details>
           <details class="faq" id="faq-language">
@@ -382,13 +389,15 @@
           <details class="faq" id="faq-source">
             <summary>Can I check what it does?</summary>
             <div class="faq-a">
-              <p>Yes. The code is open source on <a href="https://github.com/shturmap/shturmap">GitHub</a> under the MIT licence. A test fails if Shturmap's own code ever uses the Windows functions for opening or reading another program, sending input, hooking or capturing the screen.</p>
+              <p>Yes. The code is open source on <a href="https://github.com/shturmap/shturmap">GitHub</a> under the MIT licence, and its tests run on every push, in public. One fails if Shturmap's own code ever uses the Windows functions for opening or reading another program, sending input, hooking or capturing the screen; another checks that it downloads data and artwork from tarkov.dev and GitHub's raw files only.</p>
+              <p>Those check the source code. What ties your download to it: from 0.4.0, each release is built and published on GitHub's servers by the repository's own workflow, which records a signed build provenance for the Setup and its packages. With the GitHub CLI, signed in: <code>gh attestation verify Shturmap-Setup.exe -R shturmap/shturmap</code>. The release also carries the Setup's SHA-256, to compare with <code>Get-FileHash Shturmap-Setup.exe</code>.</p>
+              <p>It installs for your Windows user, without admin rights. Windows Sandbox (Windows Pro, Enterprise or Education) is one way to try a program away from your own Windows; we haven't tried Shturmap in it yet. More in the README, under <a href="https://github.com/shturmap/shturmap#check-it-yourself">Check it yourself</a>.</p>
             </div>
           </details>
           <details class="faq" id="faq-ai">
             <summary>Is this another vibe-coded app?</summary>
             <div class="faq-a">
-              <p>It is written with AI, and it is fair to ask. Most of the code comes from an AI coding assistant (Claude, by Anthropic), working for one maintainer who plays the game, decides what the app does and how it looks, and uses it.</p>
+              <p>It is written with AI, and it is fair to ask. Most of the code comes from an AI coding assistant (Claude, by Anthropic), credited as co-author in the commits, working for one maintainer who plays the game, decides what the app does and how it looks, and uses it.</p>
               <p>What sets it apart from code nobody looked at: the decisions are written down with their reasons in a design document the code has to follow, and more than 1,100 automated tests check it. One of them fails if Shturmap's own code ever uses the Windows functions for opening or reading another program, sending input, hooking or capturing the screen.</p>
               <p>None of this makes it free of faults: it is in private testing and has rough edges. You don't have to take our word for it either. The code is open, and what it reads and never does is listed under <a href="#a4">Boundaries</a>.</p>
             </div>
