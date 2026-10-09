@@ -71,13 +71,11 @@ After re-recording, check by hand:
 - **The `width` and `height` attributes** in `index.html`, if an image or the clip changed size.
 - **The clip:** play it through once. The key press must come before the marker moves, the marker must move only once, and the loop must not jump.
 
-## Launch
+## Testing notice
 
-The site goes up before the app is released, as a preview. At launch, remove everything marked
-`PREVIEW: remove at launch`:
-
-- **The preview banner:** the block at the top of `<body>` in `index.html` and its rules in `assets/site.css`.
-- **`<meta name="robots" content="noindex">`** in the `<head>` of `index.html`, so search engines may list the site.
+The preview banner and the `noindex` tag came out on 2026-10-09; search engines may list the site. In their place, a
+notice at the top of `<body>` in `index.html` (`.testing-banner` in `assets/site.css`) says that Shturmap is in
+private testing. Remove it, or change its words, when testing ends, together with the app README's note.
 
 The "Get it on GitHub" links work once the app repository is public.
 

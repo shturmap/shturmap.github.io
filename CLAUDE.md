@@ -21,8 +21,8 @@ working rules.
 - **Sober wording**: no superlatives, no exclamation marks, never "cheat"; say what it reads and what it never does.
 - **Credits**: "Map © Shebuka and contributors, CC BY-NC-SA 4.0" under every image or clip that shows a map; the
   footer keeps the Battlestate, tarkov.dev and TarkovEyes credits.
-- **Preview**: the site is public before the app's release. Everything marked `PREVIEW: remove at launch` (the
-  banner, its CSS, `<meta name="robots" content="noindex">`) comes out at launch; see README.md, "Launch".
+- **Testing notice**: the preview banner and `noindex` came out on 2026-10-09 (owner). The notice at the top says
+  Shturmap is in private testing; it goes when testing ends, with the app README's note (README.md, "Testing notice").
 - **Committing and pushing** as `shturmap`: the author, the signing key and the GitHub login (through `gh`) all come
   from the repository's git config; write the message to a file and use `git commit -F <file>`. Every commit is
   signed with `shturmap`'s SSH key; never commit or push with another identity or GitHub login (owner, 2026-10-07).

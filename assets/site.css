@@ -59,12 +59,12 @@ h1, h2 { text-wrap: balance; }
 .ping circle:nth-child(3) { animation-delay: .7s; }
 @keyframes ping { from { transform: scale(.15); opacity: .9; } to { transform: scale(1); opacity: 0; } }
 
-/* PREVIEW: remove at launch (with the banner in index.html) */
-.preview-banner { background: var(--amber); color: var(--ground); }
-.preview-banner .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 22px; }
-.preview-banner p { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: clamp(18px, 2vw, 24px); line-height: 1.3; }
-.preview-label { flex: none; padding: 6px 12px; background: var(--ground); color: var(--amber); font-family: var(--f-cond); font-weight: 600; font-size: 16px; letter-spacing: .2em; text-transform: uppercase; }
-/* /PREVIEW */
+/* The private-testing notice at the top (index.html), quieter than the preview banner it replaced: the panel's colour,
+   the label in the accent. It goes when testing ends (README.md, "Testing notice"). */
+.testing-banner { background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--line); }
+.testing-banner .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-block: 14px; }
+.testing-banner p { margin: 0; font-family: var(--f-cond); font-weight: 600; font-size: 17px; line-height: 1.35; }
+.testing-label { flex: none; padding: 4px 10px; border: 1px solid var(--amber); color: var(--amber); font-family: var(--f-cond); font-weight: 600; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; }
 
 /* Header: sticky. Its brand takes over from the hero logo once that has moved up into it (site.js) */
 .site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ground); border-bottom: 1px solid var(--line); }
