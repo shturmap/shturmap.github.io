@@ -139,10 +139,11 @@
             <div class="ref-line"><span class="eb">Before the raid</span></div>
             <h2 class="h">Pick the map that gets the most done.</h2>
             <p class="lead">Maps ranked by how many of your quests they finish or move on. What to bring, and where to get it: trader, flea, barter or loose on the map.</p>
+            <p class="lead">What you already have is marked: the items a quest hands you, from the game's log, and the keys and items a screenshot of your stash in the game's menus shows, with when they were seen.</p>
             <p class="lead">Pick the quests you want to do, and they come first: on the map and in what to bring. When the raid starts loading, Shturmap shows the kit to check, while you can still cancel.</p>
           </div>
           <figure class="fig">
-            <img src="assets/img/plan-rail.webp" width="384" height="820" alt="Plan: Streets of Tarkov first, five quests to complete and one to progress, and the items to bring with where to get each" style="max-width: 384px; width: 100%">
+            <img src="assets/img/plan-rail.webp" width="384" height="820" alt="Plan: Streets of Tarkov first, five quests to complete and one to progress, and the items to bring, with what the quests gave you and where to get more" style="max-width: 384px; width: 100%">
             <figcaption>Plan, actual size: Streets of Tarkov first, and what to bring.</figcaption>
           </figure>
         </div>
@@ -160,7 +161,7 @@
             </div>
           </div>
           <figure class="fig">
-            <img src="assets/img/quest-card.webp" width="360" height="301" alt="Quest card for Ballet Lover: active from the game log, the objective 294 m to the left and 8 m up, the key to bring and where it lies, and a link to the wiki page" style="max-width: 360px; width: 100%">
+            <img src="assets/img/quest-card.webp" width="360" height="301" alt="Quest card for Ballet Lover: active from the game log, the objective 294 m to the left and 8 m up, the key to bring, given with the quest, and a link to the wiki page" style="max-width: 360px; width: 100%">
             <figcaption>Quest card, actual size.</figcaption>
           </figure>
         </div>
@@ -194,6 +195,14 @@
             <div class="io-out" role="cell">which extracts are yours this raid</div>
           </div>
           <div class="io-row" role="row">
+            <div class="io-src" role="cell">Screenshots\ (a menu screenshot's item cells)</div>
+            <div class="io-raw" role="cell">
+              <code>Dorm 114</code>
+              <p class="note">If you take a screenshot in the game's menus with your stash or a container open, Shturmap reads the names on its item cells with the text recognition built into Windows, against the keys and items your quests need, and nothing else: on your PC, keeping only the item, the count seen and when, nothing of the picture. Unticking Read your stash from menu screenshots in settings stops it.</p>
+            </div>
+            <div class="io-out" role="cell">which needed keys and items you have</div>
+          </div>
+          <div class="io-row" role="row">
             <div class="io-src" role="cell">application_000.log</div>
             <div class="io-raw" role="cell"><code>scene preset path:maps/city_preset.bundle</code></div>
             <div class="io-out" role="cell">which map you're loading</div>
@@ -201,7 +210,7 @@
           <div class="io-row" role="row">
             <div class="io-src" role="cell">push-notifications_000.log</div>
             <div class="io-raw" role="cell"><code>"type": 10, "templateId": "6391…1b78 description"</code></div>
-            <div class="io-out" role="cell">a quest you started</div>
+            <div class="io-out" role="cell">a quest you started, and the items it hands you</div>
           </div>
           <div class="io-row" role="row">
             <div class="io-src" role="cell">Control.ini</div>
@@ -348,7 +357,7 @@
           <details class="faq" id="faq-reads">
             <summary>What does it read, and what does it never do?</summary>
             <div class="faq-a">
-              <p>It reads the file names of your screenshots and, of one taken in a raid, the top right corner of its picture for the game's extract list; the game's application and push-notification logs, Control.ini and Game.ini, where the game is installed (from Windows, Steam and the launcher's settings), and public data from tarkov.dev; the list is under <a href="#a4">Boundaries</a>. It never reads or writes the game's memory, never opens the game's process from its own code (<a href="#faq-installer">its installer is the one exception</a>), sends no keystrokes or mouse input, doesn't capture your screen or draw over the game, and changes no game files.</p>
+              <p>It reads the file names of your screenshots; of one taken in a raid, the top right corner of its picture for the game's extract list; of one taken in the menus, its item cells for the keys and items your quests need; the game's application and push-notification logs, Control.ini and Game.ini, where the game is installed (from Windows, Steam and the launcher's settings), and public data from tarkov.dev; the list is under <a href="#a4">Boundaries</a>. It never reads or writes the game's memory, never opens the game's process from its own code (<a href="#faq-installer">its installer is the one exception</a>), sends no keystrokes or mouse input, doesn't capture your screen or draw over the game, and changes no game files.</p>
             </div>
           </details>
           <details class="faq" id="faq-banned">
@@ -387,7 +396,7 @@
           <details class="faq" id="faq-delete">
             <summary>Does it change or delete any of my files?</summary>
             <div class="faq-a">
-              <p>No, with one exception you turn on yourself. Delete position screenshots in settings is off unless you tick it; ticked, each screenshot that gave a position is deleted 5 seconds after its name was read, for good. Screenshots already in the folder, and screenshots from the menus, stay.</p>
+              <p>No, with one exception you turn on yourself. Delete screenshots after reading in settings is off unless you tick it; ticked, each new screenshot, from a raid or the menus, is deleted once Shturmap has read it, at least 5 seconds after you took it, for good. Screenshots already in the folder, and every other file, stay.</p>
             </div>
           </details>
           <details class="faq" id="faq-source">

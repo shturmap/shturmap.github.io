@@ -8,14 +8,14 @@ working rules.
 
 - **No third-party requests.** Fonts, images and video are served from this repository; no CDNs, analytics or
   embeds. External URLs may only be links and the canonical/og URLs (`tools/check-site.cs` lists them all).
-- **Every claim literally true** of the app as it is. It reads screenshot file names and, of a screenshot taken in a raid, the top right corner of its picture for the
-  game's extract list (on the PC, with Windows' text recognition; nothing of the picture kept or sent; a setting turns
-  it off), the
+- **Every claim literally true** of the app as it is. It reads screenshot file names; of a screenshot taken in a raid, the top right corner of its picture for the
+  game's extract list; of one taken in the menus, its item cells for the keys and items the quests need (both on the
+  PC, with Windows' text recognition; nothing of the picture kept or sent; a setting turns each off); the
   application and push-notification logs, Control.ini and Game.ini, where the game is installed, and public
   tarkov.dev data; it sends no input, and quest status comes only from the game's logs (an objective can be ticked
   by hand). Three things need their exact words, as in the app's README: its own code opens no handle to the game,
   but its installer (Velopack) asks Windows about every running program; it deletes nothing outside its folders
-  except with "Delete position screenshots" ticked; and on The Lab, Labyrinth and Icebreaker the tile requests can
+  except with "Delete screenshots after reading" ticked; and on The Lab, Labyrinth and Icebreaker the tile requests can
   show roughly where the player looks. Don't write "only" where it isn't (it also downloads tarkov.dev data).
   Check numbers in alt texts and captions against the images.
 - **Sober wording**: no superlatives, no exclamation marks, never "cheat"; say what it reads and what it never does.
